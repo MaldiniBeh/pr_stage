@@ -1,0 +1,47 @@
+<div class="mpart">
+
+  <!-- Forme Connect big -->
+  <div class="mform container-fluid" [@moveInLeft]='state'>
+    <div style="text-align: center;">
+      <h3>Connexion</h3>
+    </div>
+    <i class="fas fa-lock-open fa-5x" *ngIf="unlock" [@moveInLeft]='state'></i>
+    <i class="fas fa-lock fa-5x" *ngIf="!unlock"></i><br><br>
+    <form id="cform" (ngSubmit)="OnFormeconnect2()" [formGroup]="Conneform2">
+      <div class="floating-label" style="margin-bottom: 50px;">
+        <input class="floating-input" type="email" placeholder=" " formControlName="cmail">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Conneform2.get('cmail').valid && Conneform2.get('cmail').touched">Email invalide
+        </em>
+        <label>Adresse Email </label>
+      </div>
+      <div class="floating-label" style="margin-bottom: 50px;">
+        <div style="display:flex;justify-content: flex-end;margin-bottom: -10px;">
+          <span (click)="onChangeeyes()"><i class="{{isHide ? 'fas fa-eye-slash fa-2x' : 'fas fa-eye fa-2x'}}"
+              style="cursor: pointer;"></i>
+          </span>
+
+        </div>
+        <input class="floating-input" type="{{isHide ? 'password' :'text'}}" placeholder=" " formControlName="cmdp">
+
+        <span class="highlight"></span>
+
+        <em class="text-danger" *ngIf="!Conneform2.get('cmdp').valid && Conneform2.get('cmdp').touched">6 caractères
+          minimum
+        </em>
+        <label> Mot de passe</label>
+      </div>
+
+      <button mdbBtn type="submit" color="dark" mdbWavesEffect [disabled]="!Conneform2.valid">Se connecter</button>
+      <br><br>
+
+      <em>
+        <small style="font-size: 1em; cursor: pointer;">
+          <a style="text-decoration: none;" class="text-dark" (click)="Onforgetpass()"> Mot de passe oublié
+            <i class="far fa-frown"></i> ? </a>
+        </small>
+      </em>
+    </form>
+    <!-- Forme End -->
+  </div>
+</div>

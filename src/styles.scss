@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+// em {
+//   // display: block;
+//   margin: 0 0 20px 0;
+//   padding-left: 60px;
+//   cursor: pointer;
+//   position: relative;
+// }
+// em div {
+//   //display: inline-block;
+//   width: 35px;
+//   height: 20px;
+//   position: absolute;
+//   top: -1px;
+//   left: 0;
+//   border-radius: 16px;
+//   border: 2px solid rgba(238, 8, 8, 0.6);
+//   transition: background-color 0.3s;
+// }
+// em div::after {
+//   content: "";
+//   // display: block;
+//   position: absolute;
+//   top: 3px;
+//   left: 5px;
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   background-color: rgba(238, 8, 8, 0.6);
+//   transition: left 0.3s;
+// }
+// em input:checked + div {
+//   border-color: #fff;
+//   background-color: rgb(0, 200, 0);
+// }
+// em input:checked + div::after {
+//   left: calc(100% - 15px);
+//   background-color: #fff;
+// }
+
+// em input {
+//   display: none;
+// }

@@ -1,0 +1,78 @@
+<h1 class="text-center">Stagiare {{detail.salaire}}(Programmation) </h1>
+<div class="container-fluid">
+
+
+  <div class="row">
+    <form [formGroup]="getStanext" (ngSubmit)="OnFormVal()">
+      <div class="form-row">
+
+        <div class="form-group col-md-2" style="margin-bottom: 50px;">
+          <img src="/assets/img/def.jpg" alt="C'est pas sérieux" class="img-thumbnail" id="tof">
+        </div>
+        <div class="form-group col-md-2">
+          <b>
+            <p>{{detail.nom.toUpperCase()}}</p>
+
+          </b>
+          <p>
+            {{detail.prenom.replace(detail.prenom.charAt(0), detail.prenom.charAt(0).toUpperCase())}}
+          </p>
+          <p>
+            {{detail.numero}}
+          </p>
+        </div>
+        <div class="form-group col-md-10"></div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="date" placeholder=" " formControlName="ddep">
+          <span class="highlight"></span>
+
+          <label>Du</label>
+        </div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="date" placeholder=" " formControlName="dfin">
+          <span class="highlight"></span>
+
+          <label>Au</label>
+        </div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <select class="floating-input" formControlName="etat">
+            <option value=""></option>
+            <option value="cours">En cours</option>
+
+          </select>
+          <span class="highlight"></span>
+
+          <label>Etat</label>
+        </div>
+
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <input type="text" list="cars" class="floating-input" placeholder=" " formControlName="encad">
+          <datalist id="cars">
+            <option *ngFor="let el of User">{{el.nom}} {{el.prenom}}
+            </option>
+          </datalist>
+          <span class="highlight"></span>
+
+          <label>Encadreur</label>
+        </div>
+        <div class="form-group col-md-12 floating-label" style="margin-bottom: 50px;">
+          <textarea name="" id="" rows="10" class="floating-input" placeholder=" " formControlName="theme"></textarea>
+          <span class="highlight"></span>
+
+          <label>Thème</label>
+        </div>
+
+        <div class="col-md-10"></div>
+        <div class="form-group col-md-2">
+          <button mdbBtn type="submit" mdbWavesEffect color="success" [disabled]="!getStanext.valid">
+            <i class="fa font-weight-bolder fa-edit m-2 " style="cursor: pointer;"></i>
+            Save
+          </button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+
+</div>

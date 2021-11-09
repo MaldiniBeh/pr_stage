@@ -1,0 +1,48 @@
+<h4>Dashbord (Statistique)</h4>
+<section>
+  <div class="row ">
+    <div class="col-lg-4 col-md-12" [@moveInLefte]='state_ani'>
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <circle-progress [percent]="Cours" [radius]="100" [maxPercent]="100" [outerStrokeWidth]="10"
+              [innerStrokeWidth]="10" [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'" [animation]="true"
+              [animationDuration]="1000" [title]="'Demande confirmée'"></circle-progress>
+            <span class="text-success h3 bold" style="font-size: 2.8em;">
+              {{Cours}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12" [@fallIne]='state_ani'>
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <circle-progress [percent]="Wait" [radius]="100" [maxPercent]="100" [outerStrokeWidth]="10"
+              [innerStrokeWidth]="10" [outerStrokeColor]="'#0000FF'" [innerStrokeColor]="'#A9A9A9'" [animation]="true"
+              [animationDuration]="1000" [title]="'Demande en attente'"></circle-progress>
+            <span class="text-primary h3 bold" style="font-size: 2.8em;">
+              {{Wait}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <circle-progress [percent]="Done" [radius]="100" [maxPercent]="100" [outerStrokeWidth]="10"
+              [innerStrokeWidth]="10" [outerStrokeColor]="'#FFFFFF'" [innerStrokeColor]="'#c00000'" [animation]="true"
+              [animationDuration]="1000" [title]="'Stage effectué'"></circle-progress>
+            <span class="text-danger h3 bold" style="font-size: 2.8em;">
+              {{Done}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

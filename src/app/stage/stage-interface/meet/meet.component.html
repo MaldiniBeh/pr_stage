@@ -1,0 +1,67 @@
+<h1 class="text-center">Stagiaire {{ typestage ? 'académique(Entretiens)' : 'professionel(Entretiens)'}}</h1>
+<div class="container-fluid">
+
+
+  <div class="row">
+    <form [formGroup]="getEntre" (ngSubmit)="OnFormEntre()">
+      <div class="form-row">
+
+        <div class="form-group col-md-2" style="margin-bottom: 50px;">
+          <img src="/assets/img/def.jpg" alt="C'est pas sérieux" class="img-thumbnail" id="tof">
+        </div>
+        <div class="form-group col-md-2">
+          <b>
+            <p>{{detail.nom.toUpperCase()}}</p>
+
+          </b>
+          <p>
+            {{detail.prenom.replace(detail.prenom.charAt(0), detail.prenom.charAt(0).toUpperCase())}}
+          </p>
+          <p>
+            {{detail.tel}}
+          </p>
+        </div>
+        <div class="form-group col-md-10"></div>
+
+        <div class="form-group col-md-4 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="date" placeholder=" " formControlName="date_e">
+          <span class="highlight"></span>
+          <label>Date</label>
+        </div>
+        <div class="form-group col-md-4 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="time" placeholder=" " formControlName="heur_e">
+          <span class="highlight"></span>
+
+          <label>Heur</label>
+        </div>
+        <div class="form-group col-md-4 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="text" placeholder=" " formControlName="lieu_e">
+
+          <span class="highlight"></span>
+
+          <label>Lieu</label>
+        </div>
+
+        <div class="form-group col-md-6 floating-label" style="margin-bottom: 50px;">
+          <input type="text" list="cars" class="floating-input" placeholder=" " formControlName="encad">
+          <datalist id="cars">
+            <option *ngFor="let el of User">{{el.nom}} {{el.prenom}}
+            </option>
+          </datalist>
+          <span class="highlight"></span>
+          <label>Chargeé</label>
+        </div>
+        <div class="form-group col-md-4"> </div>
+        <div class="form-group col-md-2">
+          <button mdbBtn type="submit" mdbWavesEffect color="success" [disabled]="!getEntre.valid">
+            <i class="fa font-weight-bolder far fa-handshake m-2 " style="cursor: pointer;"></i>
+            Programmer
+          </button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+
+</div>

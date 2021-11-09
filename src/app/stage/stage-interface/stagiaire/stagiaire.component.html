@@ -1,0 +1,364 @@
+<div class="row">
+  <!-- <form *ngIf="state3">
+    <div class="form-row">
+      <div class="col-md-9">
+        <h4>Nouveau stagiaire</h4>
+      </div>
+      <div class="col-md-3 " style="display: flex;justify-content: flex-end;">
+        <input autocomplete="off" type="search" class="form-control rounded" placeholder='Search (ctrl + "/" to focus)'
+          (input)="tata($event.target.value)" name="resarch" [(ngModel)]="filtadm">
+        <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+  </form> *ngIf="!state3"-->
+  <form>
+    <div class="form-row">
+      <div class="col-md-9">
+        <h4>Nouveau stagiaire</h4>
+      </div>
+      <div class="col-md-3 " style="display: flex;justify-content: flex-end;">
+        <input autocomplete="off" type="search" class="form-control rounded" placeholder='Search (ctrl + "/" to focus)'
+          (input)="toto($event.target.value)" name="resarch" [(ngModel)]="filtpro">
+        <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <ng-template #nodata2>
+  <h1 style="text-align: center;" *ngIf="!state3">Aucun stagiaire professionel enregistré</h1>
+</ng-template> -->
+<ng-template #nodata>
+  <h1 style="text-align: center;" *ngIf="state3">Aucun stagiaire enregistré</h1>
+</ng-template>
+<div style="display: flex;justify-content: flex-end;">
+  <button mdbBtn color="primary" class="waves-light" type="button" (click)="test.toggle()" (click)="Ontoglebtn()"
+    mdbWavesEffect><i class="{{toggle? 'fas fa-plus fa-2x' : 'fas fa-minus fa-2x'}}"></i>
+    {{toggle? 'Ajouter' : 'Reduit'}}
+  </button>
+</div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <form [formGroup]="getSta" (ngSubmit)="OnFormetu()" class="" [mdbCollapse]="isCollapsed" #test="bs-collapse">
+      <div class="form-row">
+        <div class="form-group col-md-6 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="text" placeholder=" " formControlName="nom">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('nom').valid && getSta.get('nom').touched">Nom invalide
+          </em>
+          <label>Nom</label>
+        </div>
+        <div class=" col-md-6 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" formControlName="prenom" type="text" placeholder=" ">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('prenom').valid && getSta.get('prenom').touched">Prenom invalide
+          </em>
+          <label>Prenom</label>
+        </div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" formControlName="naiss" type="date" placeholder=" ">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('naiss').valid && getSta.get('naiss').touched">Non valide
+          </em>
+          <label>Date de naissance</label>
+        </div>
+        <div class="floating-label form-group col-md-2" style="margin-bottom: 50px;">
+          <select class="floating-input" formControlName="sexe">
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('sexe').valid && getSta.get('sexe').touched">Non valide
+          </em>
+          <label>Sexe</label>
+        </div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="text" placeholder=" " formControlName="tel">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('tel').valid && getSta.get('tel').touched">Non valide
+          </em>
+          <label>Tel</label>
+        </div>
+        <div class="form-group col-md-4 floating-label" style="margin-bottom: 50px;">
+          <input class="floating-input" type="email" formControlName="email" placeholder=" ">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('email').valid && getSta.get('email').touched">Email invalide
+          </em>
+          <label>Email</label>
+        </div>
+
+        <div class="form-group col-md-2 floating-label" style="margin-bottom: 50px;">
+          <select class="floating-input" formControlName="situ">
+            <option value=""></option>
+            <option value="Marie">Marié</option>
+            <option value="Celibataire">Célibataire</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('situ').valid && getSta.get('situ').touched">Non invalide
+          </em>
+          <label>Situation Matrimoniale</label>
+        </div>
+        <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
+          <select class="floating-input" formControlName="typeg" (change)="authstate($event.target.value)">
+            <option value=""></option>
+            <option value="professionel">Professionel</option>
+            <option value="academique">Academique</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('typeg').valid && getSta.get('typeg').touched">Non invalide
+          </em>
+          <label>Type stagiaire</label>
+        </div>
+        <div *ngIf="state" class="form-group col-md-2 floating-label anne" style="margin-bottom: 50px;"
+          [formGroup]="getta">
+          <select class="floating-input" formControlName="anne">
+            <option value=""></option>
+            <option value="(1) {{year}}">(1) {{year}}</option>
+            <option value="(2) {{year}}"> (2) {{year}}</option>
+            <option value="(3) {{year}}"> (3) {{year}}</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getta.get('anne').valid && getta.get('anne').touched">Non invalide
+          </em>
+          <label>Année Academique</label>
+        </div>
+        <div *ngIf="state" class="form-group col-md-3 floating-label" style="margin-bottom: 50px;" [formGroup]="getto">
+          <select class="floating-input" formControlName="fil">
+            <option value=""></option>
+            <option value="SIL">Systemè Informatique et Logiciel</option>
+            <option value="SI">Securité Informatique</option>
+            <option value="AP">Analyste Programmeur</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getto.get('fil').valid && getto.get('fil').touched">Non invalide
+          </em>
+          <label>Filière</label>
+        </div>
+        <div *ngIf="state" class="form-group col-md-2 floating-label" style="margin-bottom: 50px;" [formGroup]="gette">
+
+          <select class="floating-input" formControlName="eta">
+            <option value=""></option>
+            <option *ngFor="let el of eta" value="{{el.id}}">{{el.nom}}</option>
+          </select>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!gette.get('eta').valid && gette.get('eta').touched">Non invalide
+          </em>
+          <label>Etablissement</label>
+          <i class="fas fa-plus fa-2x" style="cursor: pointer;" (click)="onAddeta()"></i>
+        </div>
+
+        <div *ngIf="state2" class="form-group col-md-7 floating-label" style="margin-bottom: 50px;" [formGroup]="getty">
+          <input class="floating-input" type="email" formControlName="sal" placeholder=" ">
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getty.get('sal').valid && getty.get('sal').touched">Non invalide
+          </em>
+          <label>Salaire</label>
+        </div>
+        <div class="form-group col-md-12 floating-label" style="margin-bottom: 50px;">
+          <textarea name="" id="" rows="10" class="floating-input" placeholder=" " formControlName="res"></textarea>
+          <span class="highlight"></span>
+          <em class="text-danger" *ngIf="!getSta.get('res').valid && getSta.get('res').touched">Non invalide
+          </em>
+          <label>Residence</label>
+        </div>
+      </div>
+
+      <div formArrayName="tabmat">
+
+        <div *ngFor="let ctrl of getSta?.get('tabmat')?.controls; index as i" [formGroupName]="i">
+          <div style="display: flex;justify-content: space-around;">
+            <div class="form-group col-md-8 floating-label" style="margin-bottom: 30px;">
+              <input class="floating-input" type="text" formControlName="libele" placeholder=" ">
+              <em class="text-danger" *ngIf="!ctrl.get('libele').valid && ctrl.get('libele').touched">Non invalide
+              </em>
+              <label>Compétence(Language de programmation)</label>
+            </div>
+            <div class="form-group col-md-4 floating-label" style="margin-bottom: 30px;">
+              <select class="floating-input" formControlName="niv">
+                <option value=""></option>
+                <option value="Avance">Avancé</option>
+                <option value="Intermediare">Intermédiaire</option>
+                <option value="Debutant">Débutant</option>
+              </select>
+              <em class="text-danger" *ngIf="!ctrl.get('niv').valid && ctrl.get('niv').touched">Non invalide
+              </em>
+              <label>Niveau</label>
+            </div>
+            <div class="form-group">
+              <span style="cursor: pointer; font-size: 1.8em;" class="text-danger"
+                (click)="onDeletemat(i)"><b>X</b></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="form-group col-md-2" style="margin-top: 10px;">
+        <i class="fas fa-plus fa-2x text-info" style="cursor: pointer;" (click)=" onAddlevel()"></i>
+      </div>
+      <!--  [disabled]="!(getSta.valid && getty.valid) && !(getSta.valid && gette.valid && getta.valid && getto.valid) " -->
+      <button *ngIf="state4" mdbBtn type="submit" mdbWavesEffect color="primary"
+        [disabled]="!(getSta.valid && getty.valid) && !(getSta.valid && gette.valid && getta.valid && getto.valid) ">
+        <i class="fa font-weight-bolder fa-edit m-2 " style="cursor: pointer;"></i>Ajouter
+      </button>
+      <button *ngIf="!state4" mdbBtn type="button" mdbWavesEffect color="success"
+        [disabled]="!(getSta.valid && getty.valid) && !(getSta.valid && gette.valid && getta.valid && getto.valid) "
+        (click)="onModife()">
+        <i class="fa font-weight-bolder fa-edit m-2 " style="cursor: pointer;"></i>Modifier
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<!-- <div style="display: flex;justify-content: flex-end;">
+  <button mdbBtn type="button" class="btn btn-primary" (click)="onChastp()" mdbWavesEffect color="dark">
+    P
+  </button>
+  <button mdbBtn type="button" (click)="onChasta()" class="btn btn-primary" mdbWavesEffect color="success">
+    A
+  </button>
+</div> -->
+<div *ngIf="stagiaire?.length>0; else nodata">
+
+  <p *ngIf="state3 && toggle"><code>
+      <b>{{stagiaire?.length}} {{stagiaire?.length>1 ? 'Stagiaires' : 'Stagiaire' }}</b>
+    </code></p>
+  <div id="nosee" hidden>
+    <h2>Resulat introuvé</h2>
+  </div>
+
+  <div class="table-responsive" *ngIf="state3 && toggle" [@moveInLefttab]='state_ani'>
+    <table mdbTable>
+      <thead class="black white-text">
+        <tr>
+          <th class="border-top-0">
+            Num
+          </th>
+          <th class="border-top-0">
+            Nom
+          </th>
+          <th class="border-top-0">
+            Prenom
+          </th>
+          <th class="border-top-0">
+            Tel
+          </th>
+          <th class="border-top-0">
+            Email
+          </th>
+          <th class="border-top-0">
+            Type
+          </th>
+          <!-- <th class="border-top-0">
+            Filière
+          </th>
+          <th class="border-top-0">
+            Annee
+          </th>
+          <th class="border-top-0">
+            Etablissement
+          </th> -->
+          <th class="border-top-0">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- | resarch:ngAfterContentChecked() -->
+        <tr mdbTableCol *ngFor="let el of stagiaire | resarch:ngAfterContentChecked();index as i">
+          <th scope="row">{{i+1}}</th>
+          <td>
+            <b>{{el.nom.toUpperCase()}}</b>
+          </td>
+          <td>{{el.prenom.replace(el.prenom.charAt(0), el.prenom.charAt(0).toUpperCase())}}</td>
+          <td>{{el.tel }}</td>
+          <td>{{el.email }}</td>
+          <td>
+            <p class="{{el.salaire ==='Académique' ? 'badge badge-primary':'badge badge-success'}} "
+              style="font-size: 1.3em;">
+              {{el.salaire ==='Académique' ? 'Académique':'Professionel'}}</p>
+          </td>
+          <!-- <td>{{el.fili}}</td>
+          <td>{{el.anne}}</td>
+          <td>{{el.etabli}}</td> -->
+          <td>
+            <i class="fa text-success font-weight-bolder fa-edit m-2 fa-2x" style="cursor: pointer;"
+              (click)="Udroit2(el)" (click)="test.toggle()"></i>
+            <i class="fa text-danger font-weight-bolder fa-trash-alt fa-2x" style="cursor: pointer;"
+              (click)="delUser2(el)"></i>
+            <i class="fa text-primary  m-2 font-weight-bolder fas fa-save fa-2x" style="cursor: pointer;"
+              (click)="onEdit(el)"></i>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+<!-- <div *ngIf="stapro?.length>0; else nodata2">
+
+  <p *ngIf="!state3"><code>
+      {{stapro?.length}} {{stapro?.length>1 ? 'stagiaires pro' : 'stagiaire pro' }}
+    </code></p>
+  <div class="table-responsive" *ngIf="!state3">
+    <table mdbTable>
+      <thead class="black white-text">
+        <tr>
+          <th class="border-top-0">
+            Num
+          </th>
+          <th class="border-top-0">
+            Nom
+          </th>
+          <th class="border-top-0">
+            Prenom
+          </th>
+          <th class="border-top-0">
+            Tel
+          </th>
+          <th class="border-top-0">
+            Type
+          </th>
+          <th class="border-top-0">
+            Email
+          </th>
+          <th class="border-top-0">
+            Salaire
+          </th>
+          <th class="border-top-0">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mdbTableCol *ngFor="let el of stapro | reash2:ngAfterContentChecked();index as j">
+          <th scope="row">{{j+1}}</th>
+          <td>{{el.nom}}</td>
+          <td>{{el.prenom}}</td>
+          <td>{{el.tel}}</td>
+          <td>Professionnel</td>
+          <td>{{el.email}}</td>
+          <td>{{el.salaire}}</td>
+          <td>
+            <i class="fa text-success font-weight-bolder fa-edit m-2 fa-2x" style="cursor: pointer;"
+              (click)="Udroit(el)"></i>
+            <i class="fa text-danger font-weight-bolder fa-trash-alt fa-2x" style="cursor: pointer;"
+              (click)="delUser(el)"></i>
+            <i class="fa text-primary  m-2 font-weight-bolder fas fa-save fa-2x" style="cursor: pointer;"
+              (click)="onEdit(el)"></i>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> -->

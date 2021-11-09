@@ -1,0 +1,129 @@
+<ng-template #nodata>
+  <h1 style="text-align: center;">Historique vide</h1>
+</ng-template>
+<div *ngIf="Histo?.length>0; else nodata">
+  <div *ngFor="let item of Histo; index as i">
+    <div class="card">
+      <div class="card-header">
+        <div style="display: flex;justify-content: space-between;">
+          <p>
+            <b>{{item.nom.toUpperCase()}}</b>
+            {{item.prenom.replace(item.prenom.charAt(0), item.prenom.charAt(0).toUpperCase())}}
+          </p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Campagne"
+            (click)="test.toggle()" mdbWavesEffect>
+            Détail
+          </button>
+        </div>
+      </div>
+
+      <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
+        <div class="card-body">
+          <h5 class="card-title">Stage {{typestage}}
+          </h5>
+          <p class="card-text">Entretien prévu pour le {{item.date_ent}} à {{item.heure}} avec Mr/Mll
+            {{item.nomp.toUpperCase()}}
+            {{item.prenomp.replace(item.prenomp.charAt(0), item.prenomp.charAt(0).toUpperCase())}} ({{item.profession}})
+          </p>
+          <p class="card-text h2 text-center">Détail Globale </p>
+          <div style="display: flex;justify-content: space-between;">
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                <h3>Stagiaire</h3>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="display: start;">
+                  Tel: {{item.numero}}
+                </li>
+                <li class="list-group-item" style="display: start;">
+                  Email: {{item.email}}
+                </li>
+                <li class="list-group-item" style="display: start;">
+                  Résidence: {{item.residence}}
+                </li>
+                <span *ngIf="typestage != 'Académique'">
+                  <li class="list-group-item" style="display: start;">
+                    Salaire: {{item.salaire}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Situation matrimoniale: {{item.situa_mat}}
+                  </li>
+                </span>
+                <span *ngIf="typestage === 'Académique'">
+                  <li class="list-group-item" style="display: start;">
+                    Année: {{item.anne}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Filière: {{item.fili}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Etablissement: {{item.nom_et}}
+                  </li>
+                </span>
+
+              </ul>
+
+            </div>
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                <h3>Encadreur</h3>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="display: start;">
+                  Nom: {{item.nomp}}
+                </li>
+                <li class="list-group-item" style="display: start;">
+                  Prenom: {{item.prenomp}}
+                </li>
+                <li class="list-group-item" style="display: start;">
+                  Email: {{item.email_p}}
+                </li>
+                <li class="list-group-item" style="display: start;">
+                  Profession: {{item.profession}}
+                </li>
+              </ul>
+
+            </div>
+
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                <h3>Stage</h3>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="display: start;">
+                  Etat du stage: {{item.etat_sta !='effectue' ? 'En '+item.etat_sta : 'Déjà '+item.etat_sta}}
+                </li>
+                <span *ngIf="item.etat_sta != 'attente'">
+                  <li class="list-group-item" style="display: start;">
+                    Début: {{item.dure_d}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Fin: {{item.dure_f}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Thème: {{item.theme}}
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Note:
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Attestation:
+                  </li>
+                  <li class="list-group-item" style="display: start;">
+                    Projet:
+                  </li>
+                </span>
+
+              </ul>
+
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

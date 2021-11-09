@@ -1,0 +1,117 @@
+<div class="mpart">
+  <div class="mform container-fluid" [@fallIn]='state' *ngIf="!isLog">
+    <div style="text-align: center;">
+      <h3>Inscription</h3>
+    </div>
+    <img src="/assets/img/user.png" alt="" class="image-responsive" style="width: 60px"><br>
+    <!-- Forme Ins -->
+    <form (ngSubmit)="OnFormelogin()" [formGroup]="Insform">
+      <div class="floating-label" style="margin-bottom: 30px;">
+        <input class="floating-input" type="text" placeholder=" " formControlName="nom">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Insform.get('nom').valid && Insform.get('nom').touched">Nom invalide
+        </em>
+        <label>Nom </label>
+      </div>
+      <div class="floating-label" style="margin-bottom: 30px;">
+        <input class="floating-input" type="text" placeholder=" " formControlName="prenom">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Insform.get('prenom').valid && Insform.get('prenom').touched">Prénom invalide
+        </em>
+        <label>Prenom </label>
+      </div>
+
+      <!-- <div class="floating-label">
+        <select class="floating-input" formControlName="profession">
+          <option value=""></option>
+          <option value="Agent Entretien">Agent Entretien</option>
+          <option value="Aide Soignant">Aide Soignant</option>
+          <option value="Biologiste Medical">Biologiste Médical</option>
+          <option value="Biotechnologie">Biotechnologie</option>
+          <option value="Responsable RH">Responsable RH</option>
+          <option value="Secretaire">Sécretaire</option>
+
+        </select>
+        <span class="highlight"></span>
+        <em class="text-danger"
+          *ngIf="!Insform.get('profession').valid && Insform.get('profession').touched">Selectionnez
+          profession</em>
+        <label>Profession</label>
+      </div> -->
+      <div class="floating-label" style="margin-bottom: 30px;">
+        <input class="floating-input" type="email" placeholder=" " formControlName="insmail">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Insform.get('insmail').valid && Insform.get('insmail').touched">Email invalide
+        </em>
+        <label>Adresse Email </label>
+      </div>
+
+      <div class="floating-label" style="margin-bottom: 30px;">
+        <div style="display:flex;justify-content: flex-end;margin-bottom: -10px;">
+          <span (click)="onChangeeyes()"><i class="{{isHide ? 'fas fa-eye-slash fa-2x' : 'fas fa-eye fa-2x'}}"></i>
+          </span>
+
+        </div>
+        <input class="floating-input" type="{{isHide ? 'password' :'text'}}" placeholder=" " formControlName="mdp">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Insform.get('mdp').valid && Insform.get('mdp').touched">6 caractères
+          minimum
+        </em>
+        <label> Mot de passe</label>
+      </div>
+      <button mdbBtn type="button" color="dark" outline="true" (click)="Onswichmode()" mdbWavesEffect>Changer vers
+        {{ isLog ? 'Inscription' :'Connection'}}</button>
+      <button mdbBtn type="submit" color="dark" mdbWavesEffect [disabled]="!Insform.valid">S'inscrire</button>
+
+    </form>
+  </div>
+  <!-- Forme End -->
+
+  <!-- Forme Connect big -->
+  <div class="mform container-fluid" [@moveInLeft]='state' *ngIf="isLog">
+    <div style="text-align: center;">
+      <h3>Connexion</h3>
+    </div>
+    <i class="fas fa-lock-open fa-5x" *ngIf="unlock" [@moveInLeft]='state'></i>
+    <i class="fas fa-lock fa-5x" *ngIf="!unlock"></i><br><br>
+    <form id="cform" (ngSubmit)="OnFormeconnect()" [formGroup]="Conneform">
+
+      <div class="floating-label" style="margin-bottom: 50px;">
+        <input class="floating-input" type="email" placeholder=" " formControlName="cmail">
+        <span class="highlight"></span>
+        <em class="text-danger" *ngIf="!Conneform.get('cmail').valid && Conneform.get('cmail').touched">Email invalide
+        </em>
+        <label>Adresse Email </label>
+      </div>
+      <div class="floating-label" style="margin-bottom: 50px;">
+        <div style="display:flex;justify-content: flex-end;margin-bottom: -10px;">
+          <span (click)="onChangeeyes()"><i class="{{isHide ? 'fas fa-eye-slash fa-2x' : 'fas fa-eye fa-2x'}}"
+              style="cursor: pointer;"></i>
+          </span>
+
+        </div>
+        <input class="floating-input" type="{{isHide ? 'password' :'text'}}" placeholder=" " formControlName="cmdp">
+
+        <span class="highlight"></span>
+
+        <em class="text-danger" *ngIf="!Conneform.get('cmdp').valid && Conneform.get('cmdp').touched">6 caractères
+          minimum
+        </em>
+        <label> Mot de passe</label>
+      </div>
+
+      <button mdbBtn type="button" color="dark" outline="true" mdbWavesEffect (click)="Onswichmode()">Changer vers
+        {{ isLog ? 'Inscription' :'Connection'}}</button><br>
+      <button mdbBtn type="submit" color="dark" mdbWavesEffect [disabled]="!Conneform.valid">Se connecter</button>
+      <br><br>
+
+      <em>
+        <small style="font-size: 1em; cursor: pointer;">
+          <a style="text-decoration: none;" class="text-dark" (click)="Onforgetpass()"> Mot de passe oublié
+            <i class="far fa-frown"></i> ? </a>
+        </small>
+      </em>
+    </form>
+    <!-- Forme End -->
+  </div>
+</div>

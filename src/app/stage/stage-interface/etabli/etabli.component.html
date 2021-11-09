@@ -1,0 +1,44 @@
+<ng-template #nodata>
+  <h1 style="text-align: center;">Aucun Personnel disponible</h1>
+</ng-template>
+<div style="display: flex; justify-content:flex-end">
+  <button mdbBtn type="submit" class="btn btn-primary" mdbWavesEffect color="success" (click)="onAddeta()">
+    <i class="fas fa-plus"></i>Ajouter
+  </button>
+</div>
+<div *ngIf="eta?.length>0; else nodata">
+  <h4>Liste des établissements</h4>
+  <p><code>
+      {{eta?.length}} {{eta?.length>1 ? 'établissements' : 'établissement' }}
+    </code></p>
+
+  <div class="table-responsive">
+    <table mdbTable>
+      <thead class="black white-text">
+        <tr>
+          <th class="border-top-0">
+            Num
+          </th>
+          <th class="border-top-0">
+            Nom de l'institut
+          </th>
+          <th class="border-top-0">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mdbTableCol *ngFor="let el of eta;index as i">
+          <th scope="row">{{i+1}}</th>
+          <td>{{el.nom}}</td>
+          <td>
+            <i class="fa text-success font-weight-bolder fa-edit m-2 fa-2x" style="cursor: pointer;"
+              (click)="Ueta(el)"></i>
+            <i class="fa text-danger font-weight-bolder fa-trash-alt fa-2x" style="cursor: pointer;"
+              (click)="deleta(el)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
