@@ -40,7 +40,19 @@ export class Auth2Component implements OnInit {
     this.Manag.Onverifuser(mail).subscribe((data: any) => {
       if (data.res !== 'lose') {
         this.AuthSer.Onsignin(mail, pass).then(() => {
-          this.unlock = true;
+          this.auth.onAuthStateChanged((user) => {
+            if (user?.emailVerified === true) {
+              this.unlock = true;
+            }
+            else {
+              Swal.fire({
+                icon: 'info',
+                title: 'Information...',
+                text: 'Veillez bien vouloir confirmé le mail avant de vous connectez. '
+              });
+            }
+          })
+
         })
       }
       else {

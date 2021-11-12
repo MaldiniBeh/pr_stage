@@ -1,3 +1,4 @@
+import { ManageService } from './manage.service';
 import { Peronel } from './../stage/inter-pipe/all-inter';
 import { Router } from '@angular/router';
 import Swal from "sweetalert2";
@@ -24,20 +25,25 @@ export class AuthServiceService {
     email: '',
     role: ''
   };
-  constructor(private auth: AngularFireAuth, private router: Router, private http: HttpClient) {
+  constructor(private auth: AngularFireAuth,
+    private router: Router,
+    private http: HttpClient, private manag: ManageService) {
     this.OnstatusUser();
     this.stockuid = this.auth.onAuthStateChanged((user) => {
       user?.uid;
     });
   }
+  // OnsetCookie() {
 
-  Onsignin(email: string, password: string) {
-    // tslint:disable-next-line: ban-types
+  // }
+
+  Onsignin(email: string, password: string, opt?: string) {
+
     // return new Promise((resolve, reject) => {
     return this.auth
       .signInWithEmailAndPassword(email, password)
       .then(usersigin => {
-        // tslint:disable-next-line: max-line-length
+
         if (usersigin.user && usersigin.user?.emailVerified === true) {
           /***auth */
           const Toast = Swal.mixin({
@@ -55,7 +61,12 @@ export class AuthServiceService {
             icon: 'success',
             title: 'Connectez avec succèss'
           }).then(() => {
-            this.router.navigate(['action']);
+            this.manag.Onverifuser(email, 'opt2').subscribe((data: Peronel[]) => {
+              this.User = data;
+            });
+            // return opt === 'adm' ? this.router.navigate(['/', 'romeAdm', 'action']) :
+            this.router.navigate(['action'])
+
           });
 
           /***auth end */
@@ -182,8 +193,14 @@ export class AuthServiceService {
   Onsignup(email: string, password: string, name: string, last: string, opt?: string) {
 
     return this.auth.createUserWithEmailAndPassword(email, password).then(result => {
-      result.user?.updateProfile({ displayName: `${name.toUpperCase()} ${last.replace(last.charAt(0), last.charAt(0).toUpperCase())}` });
-      this.Users = { nom: name, prenom: last, email: email, profession: 'Non connu', role: 'AdminGenerale' }
+      result.user?.updateProfile({ displayName: `${name.toUpperCase().trim()} ${last.trim().replace(last.charAt(0), last.charAt(0).toUpperCase())}` });
+      if (opt === 'optAdm') {
+        this.Users = { nom: name.trim(), prenom: last.trim(), email: email, profession: 'Non connu', role: 'AdminGenerale' }
+      }
+      else {
+        this.Users = { nom: name.trim(), prenom: last.trim(), email: email, profession: 'Non connu', role: 'Simple' }
+      }
+
       this.Onsaveser(this.Users).subscribe((user: any) => {
         this.userins.push(user)
       })
@@ -311,9 +328,9 @@ export class AuthServiceService {
     });
   }
 
-  Onlogout(): void {
+  Onlogout(opt?: string) {
     this.auth.signOut().then(() => {
-      this.router.navigate(['']);
+      return opt === 'adm' ? this.router.navigate(['/', 'romeAdm']) : this.router.navigate([''])
     });
 
   }

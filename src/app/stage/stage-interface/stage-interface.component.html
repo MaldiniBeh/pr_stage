@@ -15,12 +15,12 @@
           </div>
           <div *ngIf="item.role == 'AdminGenerale'">
             <a class="list-group-item list-group-item-action " routerLinkActive="active" [routerLink]="['perso']">
-              <i class="fas fa-lock fa-fw me-3"></i><span>Personel</span>
+              <i class="fas fa-lock fa-fw me-3"></i><span>Personnel</span>
             </a>
           </div>
           <div>
             <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['profile']"><i
-                class="fas fa-chart-area fa-fw me-3"></i><span>Profile </span>
+                class="fas fa-chart-area fa-fw me-3"></i><span>Profil </span>
             </a>
           </div>
           <div>
@@ -39,7 +39,7 @@
           </div>
           <div>
             <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['histo']"><i
-                class="fas fa-chart-line fa-fw me-3"></i><span>Historique</span></a>
+                class="fas fa-chart-line fa-fw me-3"></i><span>Fiche Stagiaire</span></a>
           </div>
 
           <!-- <a class="list-group-item list-group-item-action "><i
@@ -74,14 +74,15 @@
         <div style="display: flex;">
           <div class="buttons">
             <i class="fa fa-power-off text-danger fa-2x button" aria-hidden="true"
-              style="padding-right: 20px; cursor: pointer" id="seven"></i>
+              style="padding-right: 20px; cursor: pointer" id="seven" (click)="OnpowerToggle()"></i>
           </div>
-          <div *ngIf="item.role == 'AdminGenerale'; else noadm">
-            <h4>{{item.nom}} {{item.prenom}} </h4>
+          <!-- <div *ngIf="item.role === 'AdminGenerale'; else noadm">
+            <h4>{{item.nom.toUpperCase()}}
+              {{item.prenom.replace(item.prenom.charAt(0), item.prenom.charAt(0).toUpperCase())}} </h4>
           </div>
           <ng-template #noadm>
             <h4>{{display}}</h4>
-          </ng-template>
+          </ng-template> -->
 
         </div>
 
@@ -113,7 +114,7 @@
 
           </div>
           <div class="card-body">
-            <router-outlet></router-outlet>
+            <router-outlet #body></router-outlet>
           </div>
         </div>
       </section>
@@ -123,13 +124,13 @@
 
   </main>
 </div>
-<div id="modal-container">
+<div id="modal-container" #modalcontainer>
   <div class="modal-background bg-dark">
     <div class="modal" style=" width :350px !important;">
       <h4>Voulez-vous vraiment vous déconnecter?</h4><br>
       <div class="col-xs-12">
-        <button class="btn btn-success">Non</button>
-        <button class="btn btn-danger" (click)="OnadminLogout()">Oui</button>
+        <button mdbBtn type="button" mdbWavesEffect color="success" (click)="OnadminNologout()">Non</button>
+        <button mdbBtn type="button" mdbWavesEffect color="danger" (click)="OnadminLogout()">Oui</button>
       </div>
     </div>
   </div>

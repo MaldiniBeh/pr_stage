@@ -15,8 +15,7 @@
   <h1 style="text-align: center;" *ngIf="toggle">Aucun Personnel disponible</h1>
 </ng-template>
 <div style="display: flex; justify-content:flex-end">
-  <button mdbBtn type="button" class="btn btn-info" mdbWavesEffect color="success" (click)="test.toggle()"
-    (click)="Ontoglebtn()">
+  <button mdbBtn type="button" mdbWavesEffect color="info" (click)="test.toggle()" (click)="Ontoglebtn()">
     <i class="{{toggle? 'fas fa-plus fa-2x' : 'fas fa-minus fa-2x'}}"></i>
     {{toggle? 'Ajouter' : 'Reduit'}}
   </button></div>
@@ -60,7 +59,7 @@
 
       </div>
 
-      <button mdbBtn type="submit" mdbWavesEffect color="dark" outline="true">
+      <button mdbBtn type="submit" mdbWavesEffect color="dark" outline="true" [disabled]="!getPer.valid">
         <i class="fa font-weight-bolder fa-check m-2  fa-2x" style="cursor: pointer;"></i> <b>Enregistré</b>
       </button>
     </form>

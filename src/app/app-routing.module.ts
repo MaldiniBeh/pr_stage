@@ -18,7 +18,6 @@ import { FortoforComponent } from './stage/fortofor/fortofor.component';
 const routes: Routes = [
   { path: '', component: Auth2Component, pathMatch: 'full' },
   { path: 'romeAdm', component: AuthComponent },
-
   {
     path: 'action',
     component: StageInterfaceComponent,
@@ -33,9 +32,9 @@ const routes: Routes = [
       { path: 'perso', component: PersoComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'eta', component: EtabliComponent }
-    ]
-
+    ],
   },
+
   { path: 'not-found', component: FortoforComponent },
   { path: '**', redirectTo: 'not-found' }
 

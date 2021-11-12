@@ -95,7 +95,6 @@ export class PersoComponent implements OnInit, OnDestroy, AfterContentChecked {
     this.authSer.Onsignup(insmail, mdp, nom, prenom, 'perso').then(() => {
       this.getPer?.reset();
       this.ngOnInit();
-      this.auth.signOut();
     })
   }
   delUser(user: Peronel) {
@@ -228,3 +227,4 @@ export class PersoComponent implements OnInit, OnDestroy, AfterContentChecked {
   }
 
 }
+

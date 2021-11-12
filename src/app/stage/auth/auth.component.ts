@@ -48,8 +48,19 @@ export class AuthComponent implements OnInit {
     const pass = this.Conneform?.value.cmdp;
     this.Manag.Onverifuser(mail, 'opt').subscribe((data: any) => {
       if (data.res !== 'lose') {
-        this.AuthSer.Onsignin(mail, pass).then(() => {
-          this.unlock = true;
+        this.AuthSer.Onsignin(mail, pass, 'adm').then(() => {
+          this.auth.onAuthStateChanged((user) => {
+            if (user?.emailVerified === true) {
+              this.unlock = true;
+            }
+            else if (user?.emailVerified === false) {
+              Swal.fire({
+                icon: 'info',
+                title: 'Information...',
+                text: 'Veillez bien vouloir confirmé le mail avant de vous connectez. '
+              });
+            }
+          })
         })
       }
       else {
@@ -69,7 +80,7 @@ export class AuthComponent implements OnInit {
     const pass = this.Insform?.value.mdp;
     const name = this.Insform?.value.nom;
     const last = this.Insform?.value.prenom;
-    this.AuthSer.Onsignup(mail, pass, name, last).then(() => {
+    this.AuthSer.Onsignup(mail, pass, name, last, 'optAdm').then(() => {
       if (this.auth.user) {
         this.Insform?.reset();
         this.isLog = true;

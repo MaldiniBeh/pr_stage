@@ -169,8 +169,6 @@ export class ManageService {
     );
   }
   Onverifuser(valeur: any, opt?: string) {
-    console.log(opt);
-
     if (opt === 'opt') {
       let obj = { valeur: valeur, opt: opt }
       return this.http.post(`${this.baseUrl}/auth.php`, { data: obj })

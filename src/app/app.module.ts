@@ -31,6 +31,7 @@ import { Auth2Component } from './stage/auth2/auth2.component';
 import { FortoforComponent } from './stage/fortofor/fortofor.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
