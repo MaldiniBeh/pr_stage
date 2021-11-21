@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +28,22 @@ export class AuthServiceService {
   };
   constructor(private auth: AngularFireAuth,
     private router: Router,
-    private http: HttpClient, private manag: ManageService) {
+    private http: HttpClient,
+    private manag: ManageService,
+    private cookieService: CookieService) {
     this.OnstatusUser();
     this.stockuid = this.auth.onAuthStateChanged((user) => {
       user?.uid;
     });
   }
-  // OnsetCookie() {
 
-  // }
+  OnsetCookie(data: Peronel[]) {
+    this.cookieService.set('name', `${data[0].nom.toUpperCase()} ${data[0].prenom.replace(data[0].prenom.charAt(0), data[0].prenom.charAt(0).toUpperCase())}`)
+    this.cookieService.set('role', `${data[0].role}`)
 
-  Onsignin(email: string, password: string, opt?: string) {
+  }
+
+  Onsignin(email: string, password: string) {
 
     // return new Promise((resolve, reject) => {
     return this.auth
@@ -61,9 +67,6 @@ export class AuthServiceService {
             icon: 'success',
             title: 'Connectez avec succèss'
           }).then(() => {
-            this.manag.Onverifuser(email, 'opt2').subscribe((data: Peronel[]) => {
-              this.User = data;
-            });
             // return opt === 'adm' ? this.router.navigate(['/', 'romeAdm', 'action']) :
             this.router.navigate(['action'])
 
@@ -340,3 +343,7 @@ export class AuthServiceService {
   }
 
 }
+function data(data: any, arg1: string) {
+  throw new Error('Function not implemented.');
+}
+

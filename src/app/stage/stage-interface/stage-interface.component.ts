@@ -1,9 +1,9 @@
 import { AuthServiceService } from './../../service/auth-service.service';
-import { Peronel } from './../inter-pipe/all-inter';
 import { ManageService } from './../../service/manage.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ScriptService } from 'ngx-script-loader';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-stage-interface',
@@ -11,23 +11,21 @@ import { ScriptService } from 'ngx-script-loader';
   styleUrls: ['./stage-interface.component.scss']
 })
 export class StageInterfaceComponent implements OnInit {
-  User!: Peronel[];
-  display: any;
+  User!: any;
+  role!: any;
   @ViewChild('modalcontainer') modalcontainer!: ElementRef;
   @ViewChild('body') body!: ElementRef;
-  constructor(private ngxscrip: ScriptService, private manag: ManageService,
-    private auth: AngularFireAuth, private authSer: AuthServiceService) { }
+  constructor(private ngxscrip: ScriptService,
+    private manag: ManageService,
+    private auth: AngularFireAuth,
+    private cookie: CookieService,
+    private authSer: AuthServiceService) { }
 
   ngOnInit(): void {
-    this.User = this.authSer.User;
-    console.log(this.User);
-
-    // this.auth.onAuthStateChanged((user) => {
-    //   this.manag.Onverifuser(user?.email, 'opt2').subscribe((data: Peronel[]) => {
-    //     this.User = data;
-    //     this.display = user?.displayName;
-    //   });
-    // })
+    setTimeout(() => {
+      this.User = this.cookie.get('name');
+      this.role = this.cookie.get('role');
+    }, 500);
 
   }
   OnpowerToggle() {
@@ -44,7 +42,9 @@ export class StageInterfaceComponent implements OnInit {
   }
 
   OnadminLogout() {
-    return this.User[0].role === 'AdminGenerale' ? this.authSer.Onlogout('adm') : this.authSer.Onlogout();
+    this.cookie.delete('name');
+    this.cookie.delete('role');
+    return this.role === 'AdminGenerale' ? this.authSer.Onlogout('adm') : this.authSer.Onlogout();
   }
 
 }

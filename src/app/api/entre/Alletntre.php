@@ -3,12 +3,12 @@ require_once '../connect.php';
 
 $user = [];
 
-$selectg  = dbase()->prepare("SELECT * FROM Entretien et INNER JOIN Stagiare st ON et.id_stagiaire = st.id_stagiaire INNER JOIN Personnel per ON et.id_pers = per.id_pers INNER JOIN Stage sta ON et.id_stagiaire = sta.id_stagiaire WHERE etat_sta = 'attente' ORDER BY `et`.`id_entre` DESC");
+$selectg  = dbase()->prepare("SELECT * FROM Entretien et INNER JOIN Stagiare st ON et.id_stagiaire = st.id_stagiaire INNER JOIN Personnel per ON et.id_pers = per.id_pers INNER JOIN Stage sta ON et.id_stagiaire = sta.id_stagiaire WHERE etat_sta = 'attente' and del_entre = 0 ORDER BY `et`.`id_entre` DESC");
 $selectg->execute();
 if ($selectg) {
   $cr = 0;
   while ($toto = $selectg->fetch()) {
-    $user[$cr]['id']    = $toto['id_entre'];
+    $user[$cr]['id_entre']    = $toto['id_entre'];
     $user[$cr]['date_ent']    = $toto['date_ent'];
     $user[$cr]['heure']    = $toto['heure'];
     $user[$cr]['lieu']    = $toto['lieu'];

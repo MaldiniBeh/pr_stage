@@ -3,7 +3,7 @@ require_once 'connect.php';
 
 $user = [];
 
-$selectg  = dbase()->prepare("SELECT * FROM Stagiare WHERE salaire != 'NULL' AND id_stagiaire NOT IN (SELECT id_stagiaire FROM Entretien) ORDER BY `id_stagiaire` DESC");
+$selectg  = dbase()->prepare("SELECT * FROM Stagiare WHERE salaire > 0 AND id_stagiaire NOT IN (SELECT id_stagiaire FROM Entretien) ORDER BY `id_stagiaire` DESC");
 $selectg->execute();
 if ($selectg) {
   $cr = 0;

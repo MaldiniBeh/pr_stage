@@ -3,7 +3,7 @@ require_once 'connect.php';
 
 $user = [];
 
-$selectg  = dbase()->prepare("SELECT * FROM Stage");
+$selectg  = dbase()->prepare("SELECT * FROM Stage WHERE del_stage = 0");
 $selectg->execute();
 if ($selectg) {
   $cr = 0;

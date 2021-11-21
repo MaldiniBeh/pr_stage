@@ -200,21 +200,21 @@ export class PersoComponent implements OnInit, OnDestroy, AfterContentChecked {
       }
     });
   }
-  async onAddPerso() {
-    const { value: role } = await Swal.fire({
-      title: 'Saisir le nom de l\'institue ',
-      input: 'text',
-      inputPlaceholder: 'Institue',
-      showCancelButton: true,
-      inputValidator: (value: string) => {
-        return new Promise((resolve) => {
-          if (value) {
-            console.log(value);
-          }
-        });
-      }
-    })
-  }
+  // async onAddPerso() {
+  //   const { value: role } = await Swal.fire({
+  //     title: 'Saisir le nom de l\'institue ',
+  //     input: 'text',
+  //     inputPlaceholder: 'Institue',
+  //     showCancelButton: true,
+  //     inputValidator: (value: string) => {
+  //       return new Promise((resolve) => {
+  //         if (value) {
+  //           console.log(value);
+  //         }
+  //       });
+  //     }
+  //   })
+  // }
   toto(value: string) {
     this.manaser.filter = value;
   }

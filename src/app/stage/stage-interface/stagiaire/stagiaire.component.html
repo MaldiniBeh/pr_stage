@@ -280,9 +280,8 @@
           <td>{{el.tel }}</td>
           <td>{{el.email }}</td>
           <td>
-            <p class="{{el.salaire ==='Académique' ? 'badge badge-primary':'badge badge-success'}} "
-              style="font-size: 1.3em;">
-              {{el.salaire ==='Académique' ? 'Académique':'Professionel'}}</p>
+            <p class="{{+el.salaire === 0  ? 'badge badge-success':'badge badge-primary'}} " style="font-size: 1.3em;">
+              {{+el.salaire === 0 ? 'Académique':'Professionel'}}</p>
           </td>
           <!-- <td>{{el.fili}}</td>
           <td>{{el.anne}}</td>

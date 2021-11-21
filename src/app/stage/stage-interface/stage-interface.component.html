@@ -1,48 +1,47 @@
-<div *ngFor="let item of User">
-  <header>
-    <!-- Sidebar -->
+<header>
+  <!-- Sidebar -->
 
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
+  <nav style="margin-top: 20px" id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <div class="position-sticky">
+      <div class="list-group list-group-flush mx-3 mt-4">
 
-          <div>
-            <a class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:true}"
-              routerLinkActive="active" [routerLink]="['/action']"><i
-                class="fas fa-lock-open fa-fw me-3 "></i><span>Dashbord</span>
+        <div>
+          <a class="list-group-item list-group-item-action" [routerLinkActiveOptions]="{exact:true}"
+            routerLinkActive="active" [routerLink]="['/action']"><i
+              class="fas fa-lock-open fa-fw me-3 "></i><span>Dashbord</span>
 
-            </a>
-          </div>
-          <div *ngIf="item.role == 'AdminGenerale'">
-            <a class="list-group-item list-group-item-action " routerLinkActive="active" [routerLink]="['perso']">
-              <i class="fas fa-lock fa-fw me-3"></i><span>Personnel</span>
-            </a>
-          </div>
-          <div>
-            <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['profile']"><i
-                class="fas fa-chart-area fa-fw me-3"></i><span>Profil </span>
-            </a>
-          </div>
-          <div>
-            <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['stagiaire']"><i
-                class="fas fa-lock fa-fw me-3"></i><span>Stagiaire</span></a>
-          </div>
+          </a>
+        </div>
+        <div *ngIf="role === 'AdminGenerale'">
+          <a class="list-group-item list-group-item-action " routerLinkActive="active" [routerLink]="['perso']">
+            <i class="fas fa-lock fa-fw me-3"></i><span>Personnel</span>
+          </a>
+        </div>
+        <div>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['profile']"><i
+              class="fas fa-chart-area fa-fw me-3"></i><span>Profil </span>
+          </a>
+        </div>
+        <div>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['stagiaire']"><i
+              class="fas fa-lock fa-fw me-3"></i><span>Stagiaire</span></a>
+        </div>
 
-          <div>
-            <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['entre']">
-              <i class="fas fa-chart-pie fa-fw me-3"></i><span>Entretiens</span>
-            </a>
-          </div>
-          <div>
-            <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['eta']"><i
-                class="fas fa-chart-bar fa-fw me-3"></i><span>Etablissement</span></a>
-          </div>
-          <div>
-            <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['histo']"><i
-                class="fas fa-chart-line fa-fw me-3"></i><span>Fiche Stagiaire</span></a>
-          </div>
+        <div>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['entre']">
+            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Entretiens</span>
+          </a>
+        </div>
+        <div>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['eta']"><i
+              class="fas fa-chart-bar fa-fw me-3"></i><span>Etablissement</span></a>
+        </div>
+        <div>
+          <a class="list-group-item list-group-item-action" routerLinkActive="active" [routerLink]="['histo']"><i
+              class="fas fa-chart-line fa-fw me-3"></i><span>Fiche Stagiaire</span></a>
+        </div>
 
-          <!-- <a class="list-group-item list-group-item-action "><i
+        <!-- <a class="list-group-item list-group-item-action "><i
               class="fas fa-globe fa-fw me-3"></i><span>International</span></a>
           <a class="list-group-item list-group-item-action "><i
               class="fas fa-building fa-fw me-3"></i><span>Partners</span></a>
@@ -52,42 +51,45 @@
               class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
           <a class="list-group-item list-group-item-action "><i
               class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a> -->
-        </div>
       </div>
-    </nav>
-    <!-- Sidebar -->
+    </div>
+  </nav>
+  <!-- Sidebar -->
 
-    <!-- Navbar -->
-    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-      <!-- Container wrapper -->
-      <div class="container-fluid">
-        <!-- Toggle button -->
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
-          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
+  <!-- Navbar -->
+  <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+        aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
 
-        <!-- Brand -->
-        <h1>ROMAS</h1>
-        <!-- Search form -->
+      <!-- Brand -->
+      <div class="img-responsive">
+        <img src="/assets/img/downlo.jpeg" class="img-fluid img-thumbnail" style="height: 80px;" alt="">
+      </div>
 
-        <div style="display: flex;">
-          <div class="buttons">
-            <i class="fa fa-power-off text-danger fa-2x button" aria-hidden="true"
-              style="padding-right: 20px; cursor: pointer" id="seven" (click)="OnpowerToggle()"></i>
-          </div>
-          <!-- <div *ngIf="item.role === 'AdminGenerale'; else noadm">
-            <h4>{{item.nom.toUpperCase()}}
-              {{item.prenom.replace(item.prenom.charAt(0), item.prenom.charAt(0).toUpperCase())}} </h4>
-          </div>
-          <ng-template #noadm>
-            <h4>{{display}}</h4>
-          </ng-template> -->
+      <!-- Search form -->
 
+      <div style="display: flex;">
+        <div class="buttons">
+          <i class="fa fa-power-off text-danger fa-2x button" aria-hidden="true"
+            style="padding-right: 20px; cursor: pointer" id="seven" (click)="OnpowerToggle()"></i>
         </div>
+        <div *ngIf="role === 'AdminGenerale'; else noadm">
+          <h4>{{User}}
+          </h4>
+        </div>
+        <ng-template #noadm>
+          <h4>{{User}}</h4>
+        </ng-template>
 
-        <!-- Right links -->
-        <!-- <ul class="navbar-nav ms-auto d-flex flex-row">
+      </div>
+
+      <!-- Right links -->
+      <!-- <ul class="navbar-nav ms-auto d-flex flex-row">
 
         <li class="nav-item dropdown">
 
@@ -95,35 +97,35 @@
         </li>
       </ul> -->
 
-      </div>
-
-      <!-- Container wrapper -->
-    </nav>
-    <!-- Navbar -->
-  </header>
-  <!--Main Navigation-->
-
-  <!--Main layout-->
-  <main style="margin-top: 58px">
-    <div class="container pt-4">
-      <!-- Section: Main chart -->
-      <section class="mb-4">
-        <div class="card">
-          <div class="card-header py-3">
-            <h5 class="mb-0 text-center"><strong>Bienvenue</strong></h5>
-
-          </div>
-          <div class="card-body">
-            <router-outlet #body></router-outlet>
-          </div>
-        </div>
-      </section>
-
-
     </div>
 
-  </main>
-</div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 75px">
+  <div class="container pt-4">
+    <!-- Section: Main chart -->
+    <section class="mb-4">
+      <div class="card">
+        <div class="card-header py-3">
+          <h5 class="mb-0 text-center"><strong>Bienvenue</strong></h5>
+
+        </div>
+        <div class="card-body">
+          <router-outlet #body></router-outlet>
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+</main>
+
 <div id="modal-container" #modalcontainer>
   <div class="modal-background bg-dark">
     <div class="modal" style=" width :350px !important;">

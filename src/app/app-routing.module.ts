@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'action',
     component: StageInterfaceComponent,
-    canActivate: [AuthGuardGuard],
+    // canActivate: [AuthGuardGuard],
     children: [
       { path: '', component: DashComponent },
       { path: 'stagiaire', component: StagiaireComponent },

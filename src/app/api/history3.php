@@ -3,11 +3,8 @@ require_once 'connect.php';
 
 $user2 = [];
 
-// $selectg  = dbase()->prepare("SELECT * FROM Entretien et INNER JOIN Stagiare st ON et.id_stagiaire = st.id_stagiaire INNER JOIN Personnel per ON et.id_pers = per.id_pers  ORDER BY `et`.`id_stagiaire` DESC");
-// $selectg->execute();
 
-
-$selectStpro  = dbase()->prepare("SELECT * FROM  Stagiare st INNER JOIN Stage sta ON st.id_stagiaire = sta.id_stagiaire INNER JOIN Encadrer enc ON enc.id_stagiare = sta.id_stagiaire INNER JOIN Personnel per ON enc.id_pers = per.id_pers INNER JOIN Etablissement et ON st.id_etabli = et.id_etabli  ORDER BY `sta`.`id_sta` DESC");
+$selectStpro  = dbase()->prepare("SELECT * FROM  Stagiare st INNER JOIN Stage sta ON st.id_stagiaire = sta.id_stagiaire INNER JOIN Encadrer enc ON enc.id_stagiare = sta.id_stagiaire INNER JOIN Personnel per ON enc.id_pers = per.id_pers WHERE st.salaire > 0 ORDER BY `sta`.`id_sta` DESC");
 $selectStpro->execute();
 if ($selectStpro) {
   //
@@ -26,8 +23,6 @@ if ($selectStpro) {
     $user2[$cr]['numero'] = $tata['tel'];
     $user2[$cr]['nom_et'] = $tata['nom_et'];
     $user2[$cr]['competence'] = $tata['competence'];
-    $user2[$cr]['anne'] = $tata['anne'];
-    $user2[$cr]['fili'] = $tata['fili'];
 
     $user2[$cr]['id_stg'] = $tata['id_sta'];
     $user2[$cr]['etat_sta'] = $tata['etat_sta'];
@@ -39,18 +34,12 @@ if ($selectStpro) {
     $user2[$cr]['nom_encad'] = $tata['nom_p'];
     $user2[$cr]['profe_encad'] = $tata['profession'];
     $user2[$cr]['id_pers_encd'] = $tata['id_pers'];
+    /***end */
 
-    $user2[$cr]['nom_et'] = $tata['nom_et'];
-    /**end */
     $cr++;
   }
 
-  echo json_encode(['data' => $user2]);
+  echo json_encode(['data2' => $user2]);
 } else {
   http_response_code(404);
 }
-
-
-
-// $selectg  = dbase()->prepare("SELECT * FROM Entretien et INNER JOIN Stagiare st ON et.id_stagiaire = st.id_stagiaire INNER JOIN Personnel per ON et.id_pers = per.id_pers INNER JOIN Stage sta ON et.id_stagiaire = sta.id_stagiaire INNER JOIN Etablissement eta ON st.id_etabli = eta.id_etabli  ORDER BY `et`.`id_stagiaire` DESC");
-// $selectg->execute();

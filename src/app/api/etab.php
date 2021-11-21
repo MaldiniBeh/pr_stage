@@ -17,8 +17,9 @@ if (isset($postdata) && !empty($postdata)) {
   if ($succ) {
     http_response_code(201);
     $user = [
-      'id' => $request->data->id,
-      'nom' => $request->data->nom
+      'nom' => $request->data
+      //'id' => $request->data->id,
+      //'nom' => $request->data->nom
     ];
     echo json_encode(['data' => $user]);
   } else {

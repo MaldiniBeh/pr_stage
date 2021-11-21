@@ -17,39 +17,21 @@ if (isset($postdata) && !empty($postdata)) {
 
     if ($sthe->rowCount() == 1) {
       http_response_code(201);
-      $user = [
-        'res' => 'win'
-
-      ];
-      echo json_encode(['data' => $user]);
-    } else {
-      $user = [
-        'res' => 'lose'
-
-      ];
-      echo json_encode(['data' => $user]);
-    }
-  } else if ($request->data->opt == 'opt2') {
-    $selectg  = dbase()->prepare("SELECT * FROM Personnel WHERE email_p =?");
-    $selectg->execute(array(
-      htmlspecialchars($request->data->valeur)
-    ));
-    if ($selectg) {
       $cr = 0;
-      while ($toto = $selectg->fetch()) {
-        $user[$cr]['id']    = $toto['id_pers'];
+      while ($toto = $sthe->fetch()) {
         $user[$cr]['nom']    = $toto['nom_p'];
         $user[$cr]['prenom'] = $toto['prenom_p'];
         $user[$cr]['profession'] = $toto['profession'];
         $user[$cr]['email'] = $toto['email_p'];
         $user[$cr]['role'] = $toto['droit'];
-        $user[$cr]['actif_ina'] = $toto['actif_inac'];
         $cr++;
       }
-
       echo json_encode(['data' => $user]);
     } else {
-      http_response_code(404);
+      $user = [
+        'res' => 'lose'
+      ];
+      echo json_encode(['data' => $user]);
     }
   } else {
 
@@ -60,15 +42,19 @@ if (isset($postdata) && !empty($postdata)) {
 
     if ($sthe->rowCount() == 1) {
       http_response_code(201);
-      $user = [
-        'res' => 'win'
-
-      ];
+      $cr = 0;
+      while ($toto = $sthe->fetch()) {
+        $user[$cr]['nom']    = $toto['nom_p'];
+        $user[$cr]['prenom'] = $toto['prenom_p'];
+        $user[$cr]['profession'] = $toto['profession'];
+        $user[$cr]['email'] = $toto['email_p'];
+        $user[$cr]['role'] = $toto['droit'];
+        $cr++;
+      }
       echo json_encode(['data' => $user]);
     } else {
       $user = [
         'res' => 'lose'
-
       ];
       echo json_encode(['data' => $user]);
     }

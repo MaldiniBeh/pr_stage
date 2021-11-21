@@ -5,7 +5,7 @@ $user = [];
 
 // $selectg  = dbase()->prepare("SELECT * FROM Stagiare INNER JOIN Etablissement ON  Stagiare.id_etabli = Etablissement.id_etabli WHERE id_stagiaire NOT IN (SELECT id_stagiaire FROM Entretien)  ORDER BY `id_stagiaire` DESC");
 // $selectg->execute();
-$selectg  = dbase()->prepare("SELECT * FROM Stagiare WHERE delet_action = 0 AND id_stagiaire NOT IN (SELECT id_stagiaire FROM Entretien) ORDER BY `id_stagiaire` DESC");
+$selectg  = dbase()->prepare("SELECT * FROM Stagiare WHERE  delet_action = 0  AND id_stagiaire NOT IN (SELECT id_stagiaire FROM Entretien) ORDER BY `id_stagiaire` DESC");
 $selectg->execute();
 if ($selectg) {
   $cr = 0;
@@ -22,7 +22,6 @@ if ($selectg) {
     $user[$cr]['situation'] = $toto['situa_mat'];
     $user[$cr]['anne'] = $toto['anne'];
     $user[$cr]['fili'] = $toto['fili'];
-    $user[$cr]['etabli'] = $toto['nom_et'];
     $user[$cr]['id_etabli'] = $toto['id_etabli'];
     $user[$cr]['competence'] = $toto['competence'];
 

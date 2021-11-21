@@ -29,6 +29,7 @@ import { MeetComponent } from './stage/stage-interface/meet/meet.component';
 import { ReashEntrePipe } from './stage/inter-pipe/reash-entre.pipe';
 import { Auth2Component } from './stage/auth2/auth2.component';
 import { FortoforComponent } from './stage/fortofor/fortofor.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -81,7 +82,7 @@ import { FortoforComponent } from './stage/fortofor/fortofor.component';
       "startFromZero": false,
     }),
   ],
-  providers: [AuthGuardGuard],
+  providers: [AuthGuardGuard, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -42,16 +42,18 @@ export class AuthComponent implements OnInit {
   onChangeeyes(): void {
     this.isHide = !this.isHide;
   }
+  /***Auth Adm */
   OnFormeconnect(): void {
 
     const mail = this.Conneform?.value.cmail;
     const pass = this.Conneform?.value.cmdp;
     this.Manag.Onverifuser(mail, 'opt').subscribe((data: any) => {
       if (data.res !== 'lose') {
-        this.AuthSer.Onsignin(mail, pass, 'adm').then(() => {
+        this.AuthSer.Onsignin(mail, pass).then(() => {
           this.auth.onAuthStateChanged((user) => {
             if (user?.emailVerified === true) {
               this.unlock = true;
+              this.AuthSer.OnsetCookie(data);
             }
             else if (user?.emailVerified === false) {
               Swal.fire({

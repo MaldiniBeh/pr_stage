@@ -43,8 +43,9 @@ export class Auth2Component implements OnInit {
           this.auth.onAuthStateChanged((user) => {
             if (user?.emailVerified === true) {
               this.unlock = true;
+              this.AuthSer.OnsetCookie(data);
             }
-            else {
+            else if (user?.emailVerified === false) {
               Swal.fire({
                 icon: 'info',
                 title: 'Information...',

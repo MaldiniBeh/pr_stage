@@ -1,7 +1,5 @@
-<h1 class="text-center">Stagiaire {{ typestage ? 'académique(Entretiens)' : 'professionel(Entretiens)'}}</h1>
+<h1 class="text-center">Stagiaire {{+detail.salaire > 0 ? 'Professionel' : 'Academique'}}(Entretiens)</h1>
 <div class="container-fluid">
-
-
   <div class="row">
     <form [formGroup]="getEntre" (ngSubmit)="OnFormEntre()">
       <div class="form-row">
@@ -32,7 +30,7 @@
           <input class="floating-input" type="time" placeholder=" " formControlName="heur_e">
           <span class="highlight"></span>
 
-          <label>Heur</label>
+          <label>Heure</label>
         </div>
         <div class="form-group col-md-4 floating-label" style="margin-bottom: 50px;">
           <input class="floating-input" type="text" placeholder=" " formControlName="lieu_e">

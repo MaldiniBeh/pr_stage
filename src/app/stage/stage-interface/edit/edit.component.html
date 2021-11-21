@@ -1,4 +1,4 @@
-<h1 class="text-center">Stagiare {{detail.salaire}}(Programmation) </h1>
+<h1 class="text-center">Stagiaire {{+detail.salaire > 0 ? 'Professionel' : 'Academique'}}(Programmation) </h1>
 <div class="container-fluid">
 
 
@@ -23,7 +23,8 @@
         </div>
         <div class="form-group col-md-10"></div>
         <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
-          <input class="floating-input" type="date" placeholder=" " formControlName="ddep">
+          <input class="floating-input" type="date" placeholder=" " formControlName="ddep"
+            (change)="OngetDate($event.target.value)">
           <span class="highlight"></span>
 
           <label>Du</label>
@@ -37,7 +38,7 @@
         <div class="form-group col-md-3 floating-label" style="margin-bottom: 50px;">
           <select class="floating-input" formControlName="etat">
             <option value=""></option>
-            <option value="cours">En cours</option>
+            <option value="{{changeval}}">{{changeState}}</option>
 
           </select>
           <span class="highlight"></span>
@@ -55,7 +56,7 @@
 
           <label>Encadreur</label>
         </div>
-        <div class="form-group col-md-12 floating-label" style="margin-bottom: 50px;">
+        <div *ngIf="+detail.salaire === 0" class="form-group col-md-12 floating-label" style="margin-bottom: 50px;">
           <textarea name="" id="" rows="10" class="floating-input" placeholder=" " formControlName="theme"></textarea>
           <span class="highlight"></span>
 
@@ -66,11 +67,9 @@
         <div class="form-group col-md-2">
           <button mdbBtn type="submit" mdbWavesEffect color="success" [disabled]="!getStanext.valid">
             <i class="fa font-weight-bolder fa-edit m-2 " style="cursor: pointer;"></i>
-            Save
+            Validé
           </button>
         </div>
-
-
       </div>
     </form>
   </div>

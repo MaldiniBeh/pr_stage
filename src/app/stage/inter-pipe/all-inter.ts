@@ -12,7 +12,7 @@ export interface Eta {
   nom: string
 }
 export interface Comp {
-  libele: string;
+  libele: string,
   niv: string
 }
 export interface Stagiaire {
@@ -25,7 +25,7 @@ export interface Stagiaire {
   email: string,
   tel: string,
   situation: string,
-  salaire?: string,
+  salaire: number,
   anne?: string,
   fili?: string,
   etabli?: string,
@@ -66,31 +66,41 @@ export interface Listentre {
 
 /***A tester */
 export interface History {
-  id?: number;
-  date_ent: string;
-  heure: string;
-  lieu: string;
-  nom: string;
-  prenom: string;
-  id_pers?: number;
-  date_naissance: string;
-  sexe: string;
-  residence: string;
-  email: string;
-  email_p: string;
-  situa_mat: string;
-  anne: string;
-  fili?: string;
-  profession: string;
-  nomp: string;
-  theme: string;
-  etat_sta: string;
-  prenomp: string;
-  dure_d: string;
-  dure_f: string;
-  id_stagiaire: string;
-  nom_et: string;
-  numero: string;
-  salaire: string;
+  id_entre?: number,
+  date_ent: string,
+  heure: string,
+  lieu: string,
+  nom_entre: string,
+  prenom_entre: string,
+  id_pers_entre?: number,
+  profe_entre: string,
+  observation: string,
+
+  nom: string,
+  prenom: string,
+  date_naissance: string,
+  sexe: string,
+  residence: string,
+  email: string,
+  situa_mat: string,
+  anne: string,
+  fili?: string,
+  theme: string,
+  salaire: number,
+  id_stagiaire: number,
+  numero: string,
+  competence: string,
+
+  id_stg: string,
+  etat_sta: string,
+  dure_d: string,
+  dure_f: string,
+
+  nom_et: string,
+
+  prenom_encad: string,
+  nom_encad: string,
+  profe_encad: string,
+  id_pers_encd: string
 }
 

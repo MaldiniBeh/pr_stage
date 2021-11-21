@@ -20,9 +20,13 @@ export class EditComponent implements OnInit, OnDestroy {
   dateEntre2: any;
   getStanext: FormGroup | undefined;
   getStatheme!: FormGroup;
+  changeState: any;
+  changeval: any;
   constructor(private manag: ManageService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.changeState = 'En cours';
+    this.changeval = 'cours'
     this.subsId = this.manag.getAllteach().subscribe((toto: Peronel[]) => {
       this.User = toto;
     });
@@ -41,15 +45,15 @@ export class EditComponent implements OnInit, OnDestroy {
       this.dateEntre1 = toto;
       this.dateEntre2 = stoto;
     }
-
+    this.detail = this.manag.list;
     this.getStanext = new FormGroup({
       ddep: new FormControl(toto, [Validators.required]),
       dfin: new FormControl(stoto, [Validators.required]),
-      etat: new FormControl('cours', [Validators.required]),
+      etat: new FormControl(this.changeval, [Validators.required]),
       encad: new FormControl(null, [Validators.required]),
-      theme: new FormControl(null, [Validators.required])
+      theme: new FormControl(null)
     });
-    this.detail = this.manag.list;
+
 
   }
   OnFormVal() {
@@ -62,8 +66,9 @@ export class EditComponent implements OnInit, OnDestroy {
     const encad = this.getStanext?.value.encad;
     const tabname = encad.split(' ')[0];
     const tabpre = encad.split(' ')[1];
-
+    //console.log(`${theme} ${ddep} ${dfin} ${etat} ${encad}`);
     let Userid;
+
     this.User.map((i) => {
       if (tabname === i.nom && tabpre === i.prenom) {
         Userid = i.id;
@@ -74,6 +79,13 @@ export class EditComponent implements OnInit, OnDestroy {
         icon: 'info',
         title: 'Oupss...',
         text: 'Veillez verifier les dates '
+      });
+    }
+    else if (ddep > this.dateEntre1 && etat === 'cours') {
+      Swal.fire({
+        icon: 'info',
+        title: 'Oupss...',
+        text: 'Selectionnez l\'état avant de continuer '
       });
     }
     else {
@@ -92,7 +104,23 @@ export class EditComponent implements OnInit, OnDestroy {
     }
 
   }
+  OngetDate(event: any, eve: any) {
+    if (event > this.dateEntre1) {
+      this.changeval = 'attente';
+      this.changeState = 'En attente'
+    }
+    else if (event === this.dateEntre1) {
+      this.changeval = 'cours';
+      this.changeState = 'En cours'
+    }
+    // this.getStanext = new FormGroup({
+    //   ddep: new FormControl(event, [Validators.required]),
+    //   etat: new FormControl(this.changeval, [Validators.required]),
+    //   encad: new FormControl(null, [Validators.required]),
+    //   theme: new FormControl(null)
+    // });
 
+  }
   ngOnDestroy() {
     if (this.subsId) {
       this.subsId.unsubscribe();

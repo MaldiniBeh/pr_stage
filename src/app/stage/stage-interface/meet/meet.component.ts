@@ -41,9 +41,7 @@ export class MeetComponent implements OnInit, OnDestroy {
       encad: new FormControl(null, [Validators.required]),
     })
     this.detail = this.manag.stagiaire;
-    if (!this.detail.salaire) {
-      this.typestage = true;
-    }
+
   }
   OnFormEntre() {
     const date_e = this.getEntre?.value.date_e;

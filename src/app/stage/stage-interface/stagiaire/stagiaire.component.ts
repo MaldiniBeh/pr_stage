@@ -1,5 +1,3 @@
-import { map } from 'rxjs/operators';
-
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Comp, Eta, Stagiaire } from './../../inter-pipe/all-inter';
@@ -20,7 +18,6 @@ import { moveIn, fallIn, moveInLeft, moveInLefttab } from '../../../route.animat
 export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecked {
   year: string | undefined;
   filtinit: string | undefined;
-  //changeSearch!: string;
   state_ani = '';
   comp!: Comp[];
   state = false;
@@ -49,15 +46,8 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
       this.eta = toto;
     })
 
-    // this.subs = this.manag.getAllstapro().subscribe((toto: Stagiaire[]) => {
-    //   this.stapro = toto;
-
-    // })
     this.subs = this.manag.getAllstag().subscribe((toto: Stagiaire[]) => {
       this.stagiaire = toto;
-      this.stagiaire.map((i) => {
-        return i.salaire = i.salaire != null ? 'Professionnel' : 'Académique';
-      })
     });
 
     this.year = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`
@@ -72,7 +62,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
       eta: new FormControl(null, [Validators.required]),
     });
     this.getty = new FormGroup({
-      sal: new FormControl(null, [Validators.required]),
+      sal: new FormControl(null, [Validators.required, Validators.min(1)]),
     });
 
     this.getSta = new FormGroup({
@@ -94,7 +84,6 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
     });
   }
   OnFormetu() {
-
     const sal = this.getty?.value.sal;
     const nom = this.getSta?.value.nom;
     const naiss = this.getSta?.value.naiss;
@@ -119,6 +108,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
         nom: nom, prenom: prenom, date: naiss,
         sexe: sexe, residence: res, email: email,
         tel: tel,
+        salaire: 0,
         situation: situ,
         anne: anne,
         fili: fil,
@@ -225,6 +215,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
   //   });
 
   // }
+  /***update stagiaire */
   Udroit2(user: Stagiaire) {
     this.toggle = true;
     setTimeout(() => {
@@ -233,21 +224,20 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
     this.state4 = false;
     this.helpid = user.id;
     let typeg;
-    typeg = user.salaire != null ? 'professionel' : 'academique';
+    typeg = +user.salaire > 0 ? 'professionel' : 'academique';
     this.authstate(typeg);
-    let ittreable: string | any[];
-    this.stagiaire.map((i) => {
-      ittreable = i.competence.split('\n');
-      for (let i = 0; i < ittreable.length - 1; i++) {
-        console.log(ittreable[i].slice(ittreable[i].search(':') + 1));
-        setTimeout(() => {
-          (this.getSta?.get('tabmat') as FormArray).push(new FormGroup({
-            libele: new FormControl(ittreable[i].slice(0, ittreable[i].search(':')).trim(), [Validators.required]),
-            niv: new FormControl(ittreable[i].slice(ittreable[i].search(':') + 1).trim(), [Validators.required])
-          }));
-        }, 50);
-      }
-    })
+    let ittreable: any[];
+
+    ittreable = user.competence.split('\n');
+    for (let i = 0; i < ittreable.length - 1; i++) {
+      setTimeout(() => {
+        (this.getSta?.get('tabmat') as FormArray).push(new FormGroup({
+          libele: new FormControl(ittreable[i].slice(0, ittreable[i].search(':')).trim(), [Validators.required]),
+          niv: new FormControl(ittreable[i].slice(ittreable[i].search(':') + 1).trim(), [Validators.required])
+        }));
+      }, 50);
+    }
+
     this.getSta = new FormGroup({
       tabmat: new FormArray([
         new FormGroup({
@@ -265,23 +255,27 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
       res: new FormControl(user.residence, [Validators.required]),
       prenom: new FormControl(user.prenom, [Validators.required]),
     });
-    if (!user.salaire) {
-      this.getta = new FormGroup({
-        anne: new FormControl(user.anne, [Validators.required]),
-      });
-      this.getto = new FormGroup({
-        fil: new FormControl(user.fili, [Validators.required]),
-      });
-      this.gette = new FormGroup({
-        eta: new FormControl(user.id_etabli, [Validators.required]),
-      });
+    if (+user.salaire === 0) {
+      this.subs = this.manag.getEntre(user.id, 'opt').subscribe((toto: any) => {
+        this.getta = new FormGroup({
+          anne: new FormControl(toto[0].anne, [Validators.required]),
+        });
+        this.getto = new FormGroup({
+          fil: new FormControl(toto[0].fili, [Validators.required]),
+        });
+        this.gette = new FormGroup({
+          eta: new FormControl(toto[0].id_etabli, [Validators.required]),
+        });
+      })
     }
     else {
       this.getty = new FormGroup({
-        sal: new FormControl(user.salaire, [Validators.required]),
+        sal: new FormControl(+user.salaire, [Validators.required]),
       });
     }
-
+    setTimeout(() => {
+      this.onDeletemat(0);
+    }, 50);
   }
   onModife() {
     const sal = this.getty?.value.sal;
@@ -307,6 +301,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
         nom: nom, prenom: prenom, date: naiss,
         sexe: sexe, residence: res, email: email,
         tel: tel,
+        salaire: 0,
         situation: situ,
         anne: anne,
         fili: fil,
@@ -352,7 +347,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
             this.manag
               .getetabli(value).subscribe(
                 (res) => {
-                  this.ngOnInit();
+                  this.eta.push(res);
                 }
               );
 
@@ -363,9 +358,7 @@ export class StagiaireComponent implements OnInit, OnDestroy, AfterContentChecke
                 + value +
                 ' effectué avec succès'
             });
-
           }
-
           else {
             resolve('Veillez entrer l\'institue');
           }

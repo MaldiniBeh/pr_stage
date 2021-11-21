@@ -45,6 +45,16 @@ export class ManageService {
       })
     );
   }
+
+  getHistory2(): Observable<History[]> {
+
+    return this.http.get<History[]>(`${this.baseUrl}/history3.php`).pipe(
+      map((res: any) => {
+        return res['data2'];
+      })
+    );
+  }
+
   getAllstapro(): Observable<Stagiaire[]> {
     return this.http.get<Stagiaire[]>(`${this.baseUrl}/listepro.php`).pipe(
       map((res: any) => {
@@ -65,7 +75,6 @@ export class ManageService {
   /***send entre */
 
   sendEntre(user: Entre): Observable<Entre[]> {
-
     return this.http.post<Entre[]>(`${this.baseUrl}/entre/sendEntre.php`, { data: user })
       .pipe(
         map((res: any) => {
@@ -94,6 +103,26 @@ export class ManageService {
         })
       );
   }
+  getEntre(idStg: any, opt?: string) {
+    if (opt) {
+      let obj = { id: idStg, opt: opt }
+      return this.http.post(`${this.baseUrl}/history2.php`, { data: obj })
+        .pipe(
+          map((res: any) => {
+            return res["data"];
+          })
+        );
+    }
+    else {
+      return this.http.post(`${this.baseUrl}/history2.php`, { data: idStg })
+        .pipe(
+          map((res: any) => {
+            return res["data"];
+          })
+        );
+    }
+
+  }
   getAllet(): Observable<Eta[]> {
     return this.http.get<Eta[]>(`${this.baseUrl}/listeEta.php`).pipe(
       map((res: any) => {
@@ -120,6 +149,10 @@ export class ManageService {
     return this.http.put(`${this.baseUrl}/deluserpro2.php`, { data: user });
     //return this.http.post(`${this.baseUrl}/deluserpro2.php`, { data: user })
   }
+  OndeleEntre(entre?: number, stag?: number) {
+    let obj = { entre: entre, stag: stag }
+    return this.http.put(`${this.baseUrl}/entre/delentre.php`, { data: obj });
+  }
   OndeleEta(eta?: number) {
     // return this.http.put(`${this.baseUrl}/delusetat.php`, { data: eta })
     return this.http.post(`${this.baseUrl}/delusetat.php`, { data: eta })
@@ -129,8 +162,12 @@ export class ManageService {
     user.role = valeur;
     return this.http.put(`${this.baseUrl}/updroit.php`, { data: user });
   }
+  /**Observation */
+  OnObservation(valeur: string, idst: any, opt?: string) {
+    let obj = { valeur: valeur, opt: opt, idst: idst }
+    return this.http.put(`${this.baseUrl}/entre/sendEntre.php`, { data: obj });
+  }
   OnStag(Stag: Stag) {
-    console.log(Stag);
     return this.http.put(`${this.baseUrl}/Stag.php`, { data: Stag });
   }
   getetabli(eta: string) {
@@ -170,15 +207,6 @@ export class ManageService {
   }
   Onverifuser(valeur: any, opt?: string) {
     if (opt === 'opt') {
-      let obj = { valeur: valeur, opt: opt }
-      return this.http.post(`${this.baseUrl}/auth.php`, { data: obj })
-        .pipe(
-          map((res: any) => {
-            return res["data"];
-          })
-        );
-    }
-    else if (opt === 'opt2') {
       let obj = { valeur: valeur, opt: opt }
       return this.http.post(`${this.baseUrl}/auth.php`, { data: obj })
         .pipe(

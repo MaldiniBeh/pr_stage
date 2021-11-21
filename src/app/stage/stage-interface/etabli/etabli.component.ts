@@ -4,12 +4,15 @@ import { ManageService } from './../../../service/manage.service';
 import { Eta } from './../../inter-pipe/all-inter';
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { moveIn, fallIn, moveInLeft, moveInLefttab, fallIne } from '../../../route.animations';
+
 
 @Component({
   selector: 'app-etabli',
   templateUrl: './etabli.component.html',
-  styleUrls: ['./etabli.component.scss']
+  styleUrls: ['./etabli.component.scss'],
+  animations: [moveIn(), fallIn(), moveInLeft(), moveInLefttab(), fallIne()]
+
 })
 export class EtabliComponent implements OnInit {
   subs!: Subscription;

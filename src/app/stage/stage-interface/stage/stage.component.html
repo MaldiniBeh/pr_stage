@@ -1,8 +1,137 @@
 <ng-template #nodata>
-  <h1 style="text-align: center;">Historique vide</h1>
+  <h1 style="text-align: center; " *ngIf="state3">Aucune fiche disponible</h1>
 </ng-template>
-<div *ngIf="Histo?.length>0; else nodata">
-  <div *ngFor="let item of Histo; index as i">
+<div style="display: flex;justify-content: flex-start;">
+  <button mdbBtn type="button" (click)="onChangFichesta()" mdbWavesEffect color="success">
+    Académique
+  </button>
+  <button mdbBtn type="button" (click)="onChangFichestp()" mdbWavesEffect color="primary">
+    Professionel
+  </button>
+
+</div> <br>
+<div *ngIf="Histo1?.length>0 && state3 ; else nodata">
+  <p *ngIf="state3"><code>
+      {{Histo1?.length}} {{Histo1?.length>1 ? 'Fiches Académique' : 'Fiche Académique' }}
+    </code></p>
+  <div [@listanime]="Histo1?.length">
+    <div *ngFor="let item of Histo1; index as i">
+      <div class="card">
+        <div class="card-header">
+          <div style="display: flex;justify-content: space-between;">
+            <p>
+              <b>{{item.nom.toUpperCase()}}</b>
+              {{item.prenom.replace(item.prenom.charAt(0), item.prenom.charAt(0).toUpperCase())}}
+            </p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Campagne"
+              (click)="test.toggle()" (click)="OnsetEntr(item.id_stagiaire)" mdbWavesEffect>
+              Détail
+            </button>
+          </div>
+        </div><br>
+
+        <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
+          <div class="card-body">
+            <h1 class="text-center">République du Bénin</h1>
+            <div style="display: flex; justify-content: space-between;">
+              <img src="/assets/img/download.png" class="img-fluid" alt="" style="height: 270px;margin-top: -40px;">
+              <img src="/assets/img/symbo.jpg" class="img-fluid" style="height: 180px;" alt="">
+            </div>
+            <div style="display: flex;justify-content: space-between;">
+              <div>
+                <h4 class="m-2">
+                  <i class="fas fa-map-marker-alt text-danger m-2"></i>
+                  Ste rita, 02 BP 8051 <br>
+                  von de la garderie des enfants <br>
+                  immeuble carrelé en jaune, Cotonou <br>
+                  <i class="fas fa-phone-alt text-primary m-2"></i>
+                  90 62 15 23
+                </h4>
+              </div>
+
+              <div>
+                <h2 class="ligne">FICHE DE STAGE DE PREPARATION DE STAGE</h2>
+              </div>
+            </div> <br>
+
+            <h4 class="card-title text-center">Stage Académique
+            </h4>
+            <div>
+              <p>
+                <b class="ligne">Domaine d’activité de l’entreprise : </b> <em>Informatique</em>
+              </p>
+
+              <div style="display: flex;justify-content: space-between;">
+                <div>
+                  <p>
+                    <b class="ligne"> Chargé de l'entretien :</b> {{this.nameEntre.toUpperCase()}}
+                    {{this.lastEntre.replace(this.lastEntre.charAt(0), this.lastEntre.charAt(0).toUpperCase())}}
+                    ({{this.teachEntre}})
+                  </p>
+                  <p>
+                    <b class="ligne">Etat du stage: </b> {{item.etat_sta}}
+                  </p>
+                  <p>
+                    <b class="ligne">Encadreur :</b> {{item.nom_encad.toUpperCase()}}
+                    {{item.prenom_encad.replace(item.prenom_encad.charAt(0), item.prenom_encad.charAt(0).toUpperCase())}}({{item.profe_encad}})
+                  </p>
+
+                </div>
+                <div>
+                  <p>
+                    <b class="ligne">Année Universitaire :</b> {{item.anne}}
+                  </p>
+                  <p>
+                    <b class="ligne">Fillière :</b> {{item.fili}}
+                  </p>
+                  <p>
+                    <b class="ligne">Etablissement : </b>{{ item.nom_et}}
+                  </p>
+                  <p>
+                    <b class="ligne">Durée du stage :</b> {{ item.dure_d}} au {{ item.dure_f}}
+                  </p>
+
+                </div>
+              </div>
+              <div class=" text-center">
+                <p>
+                  <b class="ligne">Tâche à effectuée :</b> <br>
+                  {{item.theme}}
+                </p>
+
+              </div>
+              <div style="display: flex;justify-content: space-between;">
+                <p>
+                  <b class="ligne">Appréciation après entretien :</b><br>
+                  {{this.Obsvation}}
+                </p>
+                <p>
+                  <b class="ligne">Compétence et niveau</b> <br>
+                  {{item.competence}}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<br>
+
+
+<!-- Prof -->
+<ng-template #nodata2>
+  <h1 style="text-align: center;" *ngIf="!state3">Aucune fiche disponible</h1>
+</ng-template>
+<div *ngIf="Histo2?.length>0 && !state3; else nodata2">
+  <p *ngIf="!state3"><code>
+      {{Histo2?.length}} {{Histo2?.length>1 ? 'Fiches professionelle' : 'Fiche professionelle' }}
+    </code></p>
+  <div *ngFor="let item of Histo2; index as i">
     <div class="card">
       <div class="card-header">
         <div style="display: flex;justify-content: space-between;">
@@ -11,114 +140,76 @@
             {{item.prenom.replace(item.prenom.charAt(0), item.prenom.charAt(0).toUpperCase())}}
           </p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Campagne"
-            (click)="test.toggle()" mdbWavesEffect>
+            (click)="test.toggle()" (click)="OnsetEntr(item.id_stagiaire)" mdbWavesEffect>
             Détail
           </button>
         </div>
-      </div>
+      </div><br>
 
       <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
         <div class="card-body">
-          <h5 class="card-title">Stage {{typestage}}
-          </h5>
-          <p class="card-text">Entretien prévu pour le {{item.date_ent}} à {{item.heure}} avec Mr/Mll
-            {{item.nomp.toUpperCase()}}
-            {{item.prenomp.replace(item.prenomp.charAt(0), item.prenomp.charAt(0).toUpperCase())}} ({{item.profession}})
-          </p>
-          <p class="card-text h2 text-center">Détail Globale </p>
+          <h1 class="text-center">République du Bénin</h1>
+          <div style="display: flex; justify-content: space-between;">
+            <img src="/assets/img/download.png" class="img-fluid" alt="" style="height: 270px;margin-top: -40px;">
+            <img src="/assets/img/symbo.jpg" class="img-fluid" style="height: 180px;" alt="">
+          </div>
           <div style="display: flex;justify-content: space-between;">
-            <div class="card" style="width: 18rem;">
-              <div class="card-header">
-                <h3>Stagiaire</h3>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item" style="display: start;">
-                  Tel: {{item.numero}}
-                </li>
-                <li class="list-group-item" style="display: start;">
-                  Email: {{item.email}}
-                </li>
-                <li class="list-group-item" style="display: start;">
-                  Résidence: {{item.residence}}
-                </li>
-                <span *ngIf="typestage != 'Académique'">
-                  <li class="list-group-item" style="display: start;">
-                    Salaire: {{item.salaire}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Situation matrimoniale: {{item.situa_mat}}
-                  </li>
-                </span>
-                <span *ngIf="typestage === 'Académique'">
-                  <li class="list-group-item" style="display: start;">
-                    Année: {{item.anne}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Filière: {{item.fili}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Etablissement: {{item.nom_et}}
-                  </li>
-                </span>
-
-              </ul>
-
-            </div>
-            <div class="card" style="width: 18rem;">
-              <div class="card-header">
-                <h3>Encadreur</h3>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item" style="display: start;">
-                  Nom: {{item.nomp}}
-                </li>
-                <li class="list-group-item" style="display: start;">
-                  Prenom: {{item.prenomp}}
-                </li>
-                <li class="list-group-item" style="display: start;">
-                  Email: {{item.email_p}}
-                </li>
-                <li class="list-group-item" style="display: start;">
-                  Profession: {{item.profession}}
-                </li>
-              </ul>
-
+            <div>
+              <h4 class="m-2">
+                <i class="fas fa-map-marker-alt text-danger m-2"></i>
+                Ste rita, 02 BP 8051 <br>
+                von de la garderie des enfants <br>
+                immeuble carrelé en jaune, Cotonou <br>
+                <i class="fas fa-phone-alt text-primary m-2"></i>
+                90 62 15 23
+              </h4>
             </div>
 
-            <div class="card" style="width: 18rem;">
-              <div class="card-header">
-                <h3>Stage</h3>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item" style="display: start;">
-                  Etat du stage: {{item.etat_sta !='effectue' ? 'En '+item.etat_sta : 'Déjà '+item.etat_sta}}
-                </li>
-                <span *ngIf="item.etat_sta != 'attente'">
-                  <li class="list-group-item" style="display: start;">
-                    Début: {{item.dure_d}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Fin: {{item.dure_f}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Thème: {{item.theme}}
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Note:
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Attestation:
-                  </li>
-                  <li class="list-group-item" style="display: start;">
-                    Projet:
-                  </li>
-                </span>
-
-              </ul>
-
+            <div>
+              <h2 class="ligne">FICHE DE STAGE DE PREPARATION DE STAGE</h2>
             </div>
+          </div> <br>
+
+          <h4 class="card-title text-center">Stage professionel
+          </h4>
+          <div>
+            <p>
+              <b class="ligne">Domaine d’activité de l’entreprise : </b> <em> Informatique</em>
+            </p>
+
+            <div style="display: flex;justify-content: space-between;">
+              <div>
 
 
+                <p>
+                  <b class="ligne">Encadreur :</b> {{item.nom_encad.toUpperCase()}}
+                  {{item.prenom_encad.replace(item.prenom_encad.charAt(0), item.prenom_encad.charAt(0).toUpperCase())}}({{item.profe_encad}})
+                </p>
+                <p>
+                  <b class="ligne">Appréciation après entretien :</b><br>
+                  {{Obsvation}}
+                </p>
+
+              </div>
+              <div>
+                <p>
+                  <b class="ligne"> Chargé de l'entretien :</b> {{nameEntre.toUpperCase()}}
+                  {{lastEntre.replace(lastEntre.charAt(0), lastEntre.charAt(0).toUpperCase())}}
+                  ({{teachEntre}})
+                </p>
+                <p>
+                  <b class="ligne">Durée du stage :</b> {{ item.dure_d}} au {{ item.dure_f}}
+                </p>
+                <p>
+                  <b class="ligne">Etat du stage: </b> {{item.etat_sta}}
+                </p>
+
+              </div>
+            </div>
+            <p class="text-center">
+              <b class="ligne">Compétence et niveau</b> <br>
+              {{item.competence}}
+            </p>
           </div>
 
         </div>
