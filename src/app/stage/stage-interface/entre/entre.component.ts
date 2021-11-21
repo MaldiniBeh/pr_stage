@@ -6,11 +6,13 @@ import { ManageService } from './../../../service/manage.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
 import { Listentre } from '../../inter-pipe/all-inter';
+import { listanime } from '../../../route.animations';
 
 @Component({
   selector: 'app-entre',
   templateUrl: './entre.component.html',
-  styleUrls: ['./entre.component.scss']
+  styleUrls: ['./entre.component.scss'],
+  animations: [listanime()]
 })
 export class EntreComponent implements OnInit, OnDestroy, AfterContentChecked {
   Entre!: Listentre[];
@@ -45,10 +47,6 @@ export class EntreComponent implements OnInit, OnDestroy, AfterContentChecked {
     })
     this.subci = this.manaser.getAlletntre().subscribe((toto: Listentre[]) => {
       this.Entre = toto;
-      //console.log(this.Entre);
-      this.Entre.map((i) => {
-        return i.salaire = i.salaire != null ? 'Professionel' : 'Adémique';
-      })
     });
   }
   OnSendchangEntre(id_entre: number) {
@@ -92,11 +90,65 @@ export class EntreComponent implements OnInit, OnDestroy, AfterContentChecked {
       });
     }
   }
+  delEntr(entre: Listentre) {
+    let cnf = confirm('Voulez-vous vraiment supprimer?');
+    if (cnf === true) {
+      this.manaser.OndeleEntre(entre.id_entre, entre.id_stagiaire).subscribe(
+        (res) => {
+          this.Entre = this.Entre.filter(function (item) {
+            return item !== entre;
+          })
+        }
+      );
+    }
+  }
   Onseah(value: string) {
     this.manaser.filter = value;
   }
-  onSwitchpg(el: any) {
+  async onSwitchpg(el: Listentre) {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      title: 'Vos observations',
+      inputPlaceholder: 'Observation...',
+      inputAttributes: {
+        'aria-label': 'Observation'
+      },
+      showCancelButton: true,
+      inputValidator: (value: string) => {
+        return new Promise((resolve) => {
+          if (value) {
+            console.log(value + '' + el.id_entre);
+
+            this.manaser
+              .OnObservation(value, el.id_entre, 'opt').subscribe(
+                () => {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Observation ajoutée'
+
+                  }).then(() => {
+                    this.manaser.list = el;
+                    this.route.navigate(['action', 'edit', el.id_stagiaire])
+                  });
+
+                }
+              );
+
+          }
+          else {
+            resolve('Champ vide');
+          }
+        });
+      }
+
+    })
+
+  }
+  Onnavigate(el: Listentre) {
     this.manaser.list = el;
+    console.log(el);
+    console.log(this.manaser.list);
+
     this.route.navigate(['action', 'edit', el.id_stagiaire])
   }
   ngAfterContentChecked() {

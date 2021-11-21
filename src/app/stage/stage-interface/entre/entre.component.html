@@ -20,122 +20,149 @@
   <p><code>
       {{Entre?.length}} {{Entre?.length>1 ? 'entretiens' : 'entretien' }}
     </code></p>
-  <div class="table-responsive" *ngFor="let el of Entre | reashEntre:ngAfterContentChecked();index as i">
-    <table mdbTable>
-      <thead class="black white-text">
-        <tr>
-          <th class="border-top-0">
-            Date
-          </th>
-          <th class="border-top-0">
-            Heur
-          </th>
-          <th class="border-top-0">
-            Lieu
-          </th>
-          <th class="border-top-0">
-            Stagiaire
-          </th>
-          <th class="border-top-0">
-            Type
-          </th>
-          <th class="border-top-0">
-            Chargé
-          </th>
-          <th class="border-top-0">
-            Action
-          </th>
-        </tr>
+  <div [@listanime]='Entre?.length'>
+    <div class="table-responsive" *ngFor="let el of Entre | reashEntre:ngAfterContentChecked();index as i">
+      <table mdbTable>
+        <thead class="black white-text">
+          <tr>
+            <th class="border-top-0">
+              Date
+            </th>
+            <th class="border-top-0">
+              Heure
+            </th>
+            <th class="border-top-0">
+              Lieu
+            </th>
+            <th class="border-top-0">
+              Stagiaire
+            </th>
+            <th class="border-top-0">
+              Type
+            </th>
+            <th class="border-top-0">
+              Chargé
+            </th>
+            <th class="border-top-0">
+              Action
+            </th>
+          </tr>
 
-      </thead>
-      <tbody>
-        <tr mdbTableCol>
-          <th scope="row">{{el.date_ent}}</th>
-          <td>{{el.heure}}</td>
-          <td>{{el.lieu}}</td>
-          <td>{{el.nom.toUpperCase()}}
-            {{el.prenom.replace(el.prenom.charAt(0), el.prenom.charAt(0).toUpperCase())}}</td>
-          <td>{{el.salaire}}</td>
-          <td>{{el.nomp.toUpperCase()}}
-            {{el.prenomp.replace(el.prenomp.charAt(0), el.prenomp.charAt(0).toUpperCase())}}</td>
-          <td>
-            <i class=" text-info  fas fa-info m-2 fa-2x waves-light" style="cursor: pointer;" (click)="test.toggle()"
-              mdbWavesEffect></i>
-            <i class="fa text-danger font-weight-bolder fa-trash-alt fa-2x m-2" style="cursor: pointer"
-              (click)="delUser(el)"></i>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="7">
-            <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
-              <form [formGroup]="getChange">
-                <div class="container-fluid">
-                  <div class="form-row">
-                    <div style="display: flex;justify-content: space-around;">
-                      <div class="form-group col-md-3 floating-label">
-                        <input class="floating-input" type="date" placeholder=" " formControlName="rate">
-                        <span class="highlight"></span>
-                        <label>Date</label>
-                        <em class="text-danger"
-                          *ngIf="!getChange.get('rate').valid && getChange.get('rate').touched">Non valide
-                        </em>
-                      </div>
-                      <div class="form-group col-md-3 floating-label">
-                        <input class="floating-input" type="time" placeholder=" " formControlName="zeur">
-                        <span class="highlight"></span>
-                        <label>Heur</label>
-                        <em class="text-danger"
-                          *ngIf="!getChange.get('zeur').valid && getChange.get('zeur').touched">Non valide
-                        </em>
-                      </div>
-                      <div class="form-group col-md-3 floating-label">
-                        <input class="floating-input" type="text" placeholder=" " formControlName="lieu">
-                        <span class="highlight"></span>
-                        <label>Lieu</label>
-                        <em class="text-danger"
-                          *ngIf="!getChange.get('lieu').valid && getChange.get('lieu').touched">Non valide
-                        </em>
-                      </div>
-                      <div class="form-group col-md-3 floating-label">
-                        <input type="text" list="cars" class="floating-input" placeholder=" " formControlName="charg">
-                        <datalist id="cars">
-                          <option *ngFor="let el of User">{{el.nom}} {{el.prenom}}
-                          </option>
-                        </datalist>
-                        <span class="highlight"></span>
-                        <label>Chargeé</label>
-                        <em class="text-danger"
-                          *ngIf="!getChange.get('charg').valid && getChange.get('charg').touched">Non valide
-                        </em>
+        </thead>
+        <tbody>
+          <tr mdbTableCol>
+            <th scope="row">{{el.date_ent}}</th>
+            <td>{{el.heure}}</td>
+            <td>{{el.lieu}}</td>
+            <td>{{el.nom.toUpperCase()}}
+              {{el.prenom.replace(el.prenom.charAt(0), el.prenom.charAt(0).toUpperCase())}}</td>
+            <td>{{+el.salaire > 0 ? 'Professionel' : 'Académique'}}</td>
+            <td>{{el.nomp.toUpperCase()}}
+              {{el.prenomp.replace(el.prenomp.charAt(0), el.prenomp.charAt(0).toUpperCase())}}</td>
+            <td>
+              <i class=" text-info  fas fa-info m-2 fa-2x waves-light" style="cursor: pointer;" (click)="test.toggle()"
+                mdbWavesEffect></i>
+              <i class="fa text-danger font-weight-bolder fa-trash-alt fa-2x m-2" style="cursor: pointer"
+                (click)="delEntr(el)"></i>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7">
+              <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
+                <form [formGroup]="getChange">
+                  <div class="container-fluid">
+                    <div class="form-row">
+                      <div style="display: flex;justify-content: space-around;">
+                        <div class="form-group col-md-3 floating-label">
+                          <input class="floating-input" type="date" placeholder=" " formControlName="rate">
+                          <span class="highlight"></span>
+                          <label>Date</label>
+                          <em class="text-danger"
+                            *ngIf="!getChange.get('rate').valid && getChange.get('rate').touched">Non valide
+                          </em>
+                        </div>
+                        <div class="form-group col-md-3 floating-label">
+                          <input class="floating-input" type="time" placeholder=" " formControlName="zeur">
+                          <span class="highlight"></span>
+                          <label>Heur</label>
+                          <em class="text-danger"
+                            *ngIf="!getChange.get('zeur').valid && getChange.get('zeur').touched">Non valide
+                          </em>
+                        </div>
+                        <div class="form-group col-md-3 floating-label">
+                          <input class="floating-input" type="text" placeholder=" " formControlName="lieu">
+                          <span class="highlight"></span>
+                          <label>Lieu</label>
+                          <em class="text-danger"
+                            *ngIf="!getChange.get('lieu').valid && getChange.get('lieu').touched">Non valide
+                          </em>
+                        </div>
+                        <div class="form-group col-md-3 floating-label">
+                          <input type="text" list="cars" class="floating-input" placeholder=" " formControlName="charg">
+                          <datalist id="cars">
+                            <option *ngFor="let el of User">{{el.nom}} {{el.prenom}}
+                            </option>
+                          </datalist>
+                          <span class="highlight"></span>
+                          <label>Chargeé</label>
+                          <em class="text-danger"
+                            *ngIf="!getChange.get('charg').valid && getChange.get('charg').touched">Non valide
+                          </em>
+                        </div>
                       </div>
                     </div>
+                    <button mdbBtn type="submit" mdbWavesEffect color="success" [disabled]="!getChange.valid"
+                      (click)="OnSendchangEntre(el.id)">
+                      <i class="fa font-weight-bolder far fa-edit m-2 " style="cursor: pointer;"></i>
+                      Modifier
+                    </button>
+
+                    <button mdbBtn type="button" mdbWavesEffect color="dark" (click)="basicModal.show()">
+                      <i class="fas fa-chevron-right m-2 font-weight-bolder" style="cursor: pointer;"></i>
+                      Programmation
+                    </button>
+
                   </div>
-                  <button mdbBtn type="submit" mdbWavesEffect color="success" [disabled]="!getChange.valid"
-                    (click)="OnSendchangEntre(el.id)">
-                    <i class="fa font-weight-bolder far fa-edit m-2 " style="cursor: pointer;"></i>
-                    Modifier
-                  </button>
 
-                  <button mdbBtn type="button" mdbWavesEffect color="dark" (click)="onSwitchpg(el)">
-                    <i class="fas fa-chevron-right m-2 font-weight-bolder" style="cursor: pointer;"></i>
-                    Suivant
-                  </button>
+                </form>
+              </div>
+            </td>
 
-                </div>
+          </tr>
 
-              </form>
+        </tbody>
+      </table>
+      <!-- Top right side Modal -->
+      <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-side modal-top-right" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                <span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title w-100" id="myModalLabel">Avez-vous des observations pour ce stagiaire?</h4>
             </div>
-          </td>
+            <!-- <div class="modal-body">
+          </div> -->
+            <div class="modal-footer">
+              <button type="button" mdbBtn color="danger" class="waves-light" aria-label="Close"
+                (click)="basicModal.hide()" (click)="Onnavigate(el)" mdbWavesEffect>Non</button>
+              <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                (click)="basicModal.hide()" (click)="onSwitchpg(el)">Oui</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        </tr>
-
-      </tbody>
-    </table>
-
+    </div>
   </div>
 
+
 </div>
-<!-- <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
+<!--
+  [routerLink]="['/','action', 'edit', el.id_stagiaire]
+  <div [mdbCollapse]="isCollapsed" #test="bs-collapse">
   <div class="row">
     <form>
       <div class="form-row">
